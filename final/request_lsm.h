@@ -42,18 +42,16 @@ typedef struct {
 	char valid;
 }Value_info;
 
-typedef struct req_t{
+typedef struct {
 	int fd;
 	int dmaTag;
 	unsigned int seq;
 	unsigned int *cur;
-	heap_t *pq;
 	pthread_mutex_t *mutx;
 	Keyword_info *keyword_info;
 	Type_info *type_info;
 	Key_info *key_info;
 	Value_info *value_info;
-	int (*end_req)(struct req_t*);
 }req_t;
 
 

@@ -1,0 +1,80 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+AllocRequest	command.c	/^req_t* AllocRequest(req_t* req) {$/;"	f
+BUF_SIZE	server.h	4;"	d
+CC	Makefile	/^CC = gcc$/;"	m
+CXX	Makefile	/^CXX = g++$/;"	m
+DequeReq	request.c	/^req_t* DequeReq() {$/;"	f
+EnqueReq	request.c	/^void EnqueReq(req_t* req, uint64_t seq) {$/;"	f
+GetKey	command.c	/^int GetKey(char *str, int len, int cur, req_t *req ) {$/;"	f
+GetLength	command.c	/^int GetLength(char *str, char cmp, int len, int cur, req_t *req, char which) {$/;"	f
+GetRequest	command.c	/^req_t* GetRequest(int fd, char *str, int len, uint64_t seq, req_t *req) {$/;"	f
+GetType	command.c	/^int GetType(char *str, int len, int cur, req_t *req) {$/;"	f
+GetValue	command.c	/^int GetValue(char* str, int len, int cur, req_t *req) {$/;"	f
+Key_info	request.h	/^}Key_info;$/;"	t	typeref:struct:__anon3
+Keyword_info	request.h	/^}Keyword_info;$/;"	t	typeref:struct:__anon1
+MAX_CLNT	server.h	5;"	d
+OBJECTS	Makefile	/^OBJECTS = server.o command.o queue.o request.o$/;"	m
+QUEUE_H_	queue.h	9;"	d
+SendBulkValue	command.c	/^int SendBulkValue(int fd, char* value, int len) {$/;"	f
+SendDelCommand	command.c	/^int SendDelCommand(int fd) {$/;"	f
+SendErrCommand	command.c	/^int SendErrCommand(int fd, char* ErrMsg) {$/;"	f
+SendOkCommand	command.c	/^int SendOkCommand(int fd) {$/;"	f
+Type_info	request.h	/^}Type_info;$/;"	t	typeref:struct:__anon2
+Value_info	request.h	/^}Value_info;$/;"	t	typeref:struct:__anon4
+__COMMAND_H_	command.h	2;"	d
+__REQUEST_H__	request.h	2;"	d
+__SERVER_H__	server.h	2;"	d
+_node	queue.h	/^typedef struct _node {$/;"	s
+_queue	queue.h	/^typedef struct _queue{$/;"	s
+add_rear	queue.c	/^void add_rear(queue *qptr, void *value){$/;"	f
+clnt_cnt	server.c	/^int clnt_cnt = 0;$/;"	v
+clnt_mutx	server.c	/^pthread_mutex_t clnt_mutx = PTHREAD_MUTEX_INITIALIZER;$/;"	v
+clnt_socks	server.c	/^int clnt_socks[MAX_CLNT];$/;"	v
+count	queue.h	/^	int count;$/;"	m	struct:_queue
+create_queue	queue.c	/^queue* create_queue(){$/;"	f
+destroy_queue	queue.c	/^void destroy_queue(queue *qptr){$/;"	f
+dmaTag	request.h	/^	int dmaTag;$/;"	m	struct:__anon5
+end	request.c	/^int start = 0, end = 0;$/;"	v
+execute_server	server.c	/^int execute_server(int serv_sock) {$/;"	f
+fd	request.h	/^	int fd;$/;"	m	struct:__anon5
+front	queue.h	/^	nptr front;$/;"	m	struct:_queue
+init_server	server.c	/^int init_server(int port) {	\/\/ socket, bind, listen$/;"	f
+key	request.h	/^	uint64_t key;$/;"	m	struct:__anon3
+key_info	request.h	/^	Key_info *key_info;$/;"	m	struct:__anon5
+keywordNum	request.h	/^	int keywordNum;$/;"	m	struct:__anon1
+keyword_info	request.h	/^	Keyword_info *keyword_info;$/;"	m	struct:__anon5
+len	request.h	/^	int len;$/;"	m	struct:__anon2
+len	request.h	/^	int len;$/;"	m	struct:__anon3
+len	request.h	/^	int len;$/;"	m	struct:__anon4
+next	queue.h	/^	struct _node* next;$/;"	m	struct:_node	typeref:struct:_node::_node
+node	queue.h	/^}node;$/;"	t	typeref:struct:_node
+nptr	queue.h	/^typedef node* nptr;$/;"	t
+offset	request.h	/^	int offset;$/;"	m	struct:__anon2
+offset	request.h	/^	int offset;$/;"	m	struct:__anon3
+offset	request.h	/^	int offset;$/;"	m	struct:__anon4
+proc_req	request.c	/^void* proc_req(void *arg) {$/;"	f
+queue	queue.h	/^}queue;$/;"	t	typeref:struct:_queue
+queue_mutx	request.c	/^pthread_mutex_t queue_mutx = PTHREAD_MUTEX_INITIALIZER;$/;"	v
+rear	queue.h	/^	nptr rear;$/;"	m	struct:_queue
+remove_front	queue.c	/^void* remove_front(queue *qptr){$/;"	f
+req_cb	request.c	/^void req_cb(int type, void *value) {$/;"	f
+req_queue	server.c	/^queue *req_queue;$/;"	v
+req_t	request.h	/^}req_t;$/;"	t	typeref:struct:__anon5
+reqs	request.c	/^req_t *reqs[1000] = {0,};$/;"	v
+start	request.c	/^int start = 0, end = 0;$/;"	v
+type	request.h	/^	char type;$/;"	m	struct:__anon2
+type_info	request.h	/^	Type_info *type_info;$/;"	m	struct:__anon5
+type_str	request.h	/^	char type_str[10];$/;"	m	struct:__anon2
+valid	request.h	/^	char valid;$/;"	m	struct:__anon1
+valid	request.h	/^	char valid;$/;"	m	struct:__anon2
+valid	request.h	/^	char valid;$/;"	m	struct:__anon3
+valid	request.h	/^	char valid;$/;"	m	struct:__anon4
+value	queue.h	/^	void *value;$/;"	m	struct:_node
+value	request.h	/^	char* value;$/;"	m	struct:__anon4
+value_info	request.h	/^	Value_info *value_info;$/;"	m	struct:__anon5
+work_on_accept	server.c	/^void* work_on_accept(void *arg) {$/;"	f

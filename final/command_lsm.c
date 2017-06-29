@@ -6,11 +6,10 @@
 #include <unistd.h>
 #include <inttypes.h>
 #include <ctype.h>
-#include "queue_lsm.h"
+#include "queue.h"
 #include "request.h"
-#include "priority_queue.h"
 //for lsmtree
-//#include "../lsmtree/utils.h"
+#include "../lsmtree/utils.h"
 
 /*
    if valid == 0 -> not yet
@@ -222,76 +221,88 @@ int GetValue(char* str, int len, int cur, req_t *req) {
 	}
 }
 
-int GetRequest(int fd, char *str, int len, req_t *req, unsigned int *start, unsigned int *end, heap_t *pq, pthread_mutex_t *mutx) {
+req_t* AllocRequest(req_t* req) {
+	req = (req_t*)malloc(sizeof(req_t));
+	req->keyword_info = (Keyword_info*)malloc(sizeof(Keyword_info));
+	req->type_info = (Type_info*)malloc(sizeof(Type_info));
+	req->key_info = (Key_info*)malloc(sizeof(Key_info));
+	req->value_info = (Value_info*)malloc(sizeof(Value_info));
+//	req->value_info->value = (char*)malloc(sizeof(char)*PAGESIZE);
+
+	req->fd = 0;
+	req->keyword_info->valid = 0;
+	req->type_info->valid = 0;
+	req->key_info->valid = 0;
+	req->value_info->valid = 0;
+
+	req->type_info->offset = 0;
+	req->key_info->offset = 0;
+	req->value_info->offset = 0;
+
+	req->keyword_info->keywordNum = 0;
+	req->type_info->len = 0;
+	req->key_info->len = 0;
+	req->value_info->len = 0;
+
+	memset(req->type_info->type_str, 0, 10);
+//	memset(req->value_info->value, 0, PAGESIZE);
+	return req;	
+}
+
+req_t* GetRequest(int fd, char *str, int len, uint64_t seq, req_t *req) {
 	int cur = 0, result = 0;
-	uint64_t seq = 0;
-	req_t* new_req = req;
 	//printf("cur %d, req %p\n", cur, req);
 	while ( cur < len ) {
-		printf("cur : %d\n", cur);
-		if ( new_req == NULL ) {
-			new_req = alloc_req(new_req);
-			new_req->fd = fd;
+		if ( req == NULL ) {
+			req = AllocRequest(req);
+			req->fd = fd;
 		}
 		else {
 			//printf("keyword valid: %d\ntype valid: %d\nkey valid: %d\nvalue valid: %d\n",req->keyword_info->valid,req->type_info->valid,req->key_info->valid,req->value_info->valid);
 		}
 
-		if ( !new_req->keyword_info->valid )
-			if ( (cur = GetLength(str, '*', len, cur, new_req, 1)) == -1 ) return -1;
+		if ( !req->keyword_info->valid )
+			if ( (cur = GetLength(str, '*', len, cur, req, 1)) == -1 ) return req;
 //printf("1 %d\n",req->keyword_info->keywordNum); 
-		if ( !new_req->type_info->valid ) 
-			if ( (cur = GetLength(str, '$', len, cur, new_req, 2)) == -1 ) return -1;
+		if ( !req->type_info->valid ) 
+			if ( (cur = GetLength(str, '$', len, cur, req, 2)) == -1 ) return req;
 
 //printf("2 %d\n",req->type_info->len); 
-		if ( new_req->type_info->valid == 1 )
-			if ( (cur = GetType(str, len, cur, new_req)) == -1 ) return -1;
+		if ( req->type_info->valid == 1 )
+			if ( (cur = GetType(str, len, cur, req)) == -1 ) return req;
 
 //printf("3\n"); 
-		if ( !new_req->key_info->valid ) 
-			if ( (cur = GetLength(str, '$', len, cur, new_req, 3)) == -1 ) return -1;
+		if ( !req->key_info->valid ) 
+			if ( (cur = GetLength(str, '$', len, cur, req, 3)) == -1 ) return req;
 
 //printf("4 %d\n",req->key_info->len); 
-		if ( new_req->key_info->valid == 1 )
-			if ( (cur = GetKey(str, len, cur, new_req)) == -1 ) return -1;
+		if ( req->key_info->valid == 1 )
+			if ( (cur = GetKey(str, len, cur, req)) == -1 ) return req;
 
 //printf("5\n"); 
 
-		#ifdef MEMIO
-		if ( new_req->type_info->type < 3 ) {
-			alloc_dma(new_req);
+		if ( req->type_info->type < 3 ) {
+			//req->dmaTag = memio_alloc_dma(req->type_info->type, req->value_info->value);
+			memset(req->value_info->value, 0, PAGESIZE);
 		}	
-		#endif
 
-
-		if ( new_req->type_info->type > 1 ) {
-			if ( new_req->type_info->type == 2 ) {
-				new_req->seq = *end;
-				new_req->pq = pq;
-				new_req->cur = start;
-				new_req->mutx = mutx;
-				*end = (*end + 1) % 0xffffffff;
-			}
-			EnqueReq(new_req, seq);
-			//make_req(req);
-			new_req = NULL;
+		if ( req->type_info->type > 1 ) {
+			EnqueReq(req, seq); 
 			continue;
 		}
 
 //printf("6\n"); 
-		if ( !new_req->value_info->valid )
-			if ( (cur = GetLength(str, '$', len, cur, new_req, 4)) == -1 ) return -1;
+		if ( !req->value_info->valid )
+			if ( (cur = GetLength(str, '$', len, cur, req, 4)) == -1 ) return req;
 
 //printf("7\n"); 
-		if ( new_req->value_info->valid == 1 ) 
-			if ( (cur = GetValue(str, len, cur, new_req)) == -1 ) return -1;
+		if ( req->value_info->valid == 1 ) 
+			if ( (cur = GetValue(str, len, cur, req)) == -1 ) return req;
 
 //printf("8\n"); 
-		EnqueReq(new_req, seq);
-		new_req = NULL;
-		//make_req(req);
+		EnqueReq(req, seq);
 	}
-	return 0;
+	return NULL;
 }
 
 /*

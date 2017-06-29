@@ -8,11 +8,10 @@
 #include <arpa/inet.h>
 #include <stdint.h>
 #include <inttypes.h>
-#include "server.h"
-#include "command.h"
-#include "queue.h"
-#include "request.h"
-#include "priority_queue.h"
+#include "server_lsm.h"
+#include "command_lsm.h"
+#include "queue_lsm.h"
+#include "request_lsm.h"
 
 int clnt_cnt = 0;
 int clnt_socks[MAX_CLNT];
@@ -80,33 +79,22 @@ int execute_server(int serv_sock) {
 void* work_on_accept(void *arg) {
 	int clnt_sock = (int)arg;
 	int str_len=0, i;
-	unsigned int start = 0, end = 0;
-	pthread_mutex_t read_async_mutx = PTHREAD_MUTEX_INITIALIZER;
 	char msg[BUF_SIZE];
-	//static uint64_t seq;
+	static uint64_t seq;
 	int exit_val;
-	//seq++;
+	seq++;
 	req_t *req = NULL;
-	heap_t *read_async_PQ = create_PQ();
 	//printf("clnt seq : %"PRIu64" clnt_socket : %d\n",seq,clnt_sock);
 	while( (str_len = read(clnt_sock, msg, sizeof(msg))) != 0 ) {
-		if ( str_len == -1 ) {
-			
-		}
+		
 		//write(clnt_sock, "+OK\r\n", 5);
-		printf("!!!read!!!\n%d\n%d\n%s",clnt_sock,str_len,msg);
+		//printf("!!!read%d %s",clnt_sock,msg);
 		/*
 		if( (exit_val = ParseAndInsertCommand(clnt_sock, msg, str_len, seq)) != -2 ) {
 			printf("parse failed %d\n", exit_val);
 		}
 		*/
-		if ( GetRequest(clnt_sock, msg, str_len, req, &start, &end, read_async_PQ, &read_async_mutx) == -1 ) {
-			memset(msg, 0, str_len);
-			continue;
-		}
-		memset(msg, 0, str_len);
-		req = NULL;
-		//make_req(req);
+		req = GetRequest(clnt_sock, msg, str_len, seq, req);
 		//printf("str_len %d\n",str_len);
 		//if( req != NULL ) printf("wonk keyword valid: %d\ntype valid: %d\nkey valid: %d\nvalue valid: %d\n",req->keyword_info->valid,req->type_info->valid,req->key_info->valid,req->value_info->valid);
 	}
@@ -122,13 +110,12 @@ void* work_on_accept(void *arg) {
 	clnt_cnt--;
 	//close(clnt_sock);
 	pthread_mutex_unlock(&clnt_mutx);
-	destroy_PQ(read_async_PQ);
 	return NULL;
 }
-
+/*
 int main(int argc, char* argv[]) {
 	int serv_sock;
 	serv_sock = init_server(atoi(argv[1]));
 	execute_server(serv_sock);
 	return 0;
-}
+}*/
