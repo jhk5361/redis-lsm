@@ -112,11 +112,11 @@ int8_t lr_end_req(lsmtree_req_t *r){
 			pthread_mutex_lock(&parent->meta_lock);
 			parent->now_number++;
 			if(r->seq_number==0)
-				memcpy(parent->res->meta[0],r->res->meta[0],PAGESIZE);
+				memcpy(parent->res->meta[0],r->keys,PAGESIZE);
 			else
-				memcpy(parent->res->meta[1],r->res->meta[0],PAGESIZE);
+				memcpy(parent->res->meta[1],r->keys,PAGESIZE);
 			pthread_mutex_unlock(&parent->meta_lock);
-			free(r->res);
+			free(r->keys);
 			break;
 		case LR_DDR_T:
 			parent=r->parent;
@@ -124,6 +124,12 @@ int8_t lr_end_req(lsmtree_req_t *r){
 			parent->now_number++;
 			pthread_mutex_unlock(&parent->meta_lock);
 			break;
+        case LR_DDW_T:
+            parent=r->parent;
+            pthread_mutex_lock(&parent->meta_lock);
+            parent->now_number++;
+            pthread_mutex_unlock(&parent->meta_lock);
+            break;
 		case LR_READ_T:
 			pthread_mutex_destroy(&r->meta_lock);
 			break;
@@ -149,13 +155,7 @@ int8_t lr_gc_end_req(lsmtree_gc_req_t *r){
 			pthread_mutex_lock(&parent->meta_lock);
 			parent->now_number++;
 			pthread_mutex_unlock(&parent->meta_lock);
-			free(r->res);
-			break;
-		case LR_DDW_T:
-			parent=r->parent;
-			pthread_mutex_lock(&parent->meta_lock);
-			parent->now_number++;
-			pthread_mutex_unlock(&parent->meta_lock);
+			free(r->keys);
 			break;
 		case LR_DR_T:
 			parent=r->parent;
@@ -163,18 +163,14 @@ int8_t lr_gc_end_req(lsmtree_gc_req_t *r){
 			offset=r->seq_number%2;
 			pthread_mutex_lock(&parent->meta_lock);
 			parent->now_number++;
-			memcpy(&parent->compt_headers[setnumber].meta[offset],r->res->meta[0],PAGESIZE);
+			memcpy(&parent->compt_headers[setnumber].meta[offset],r->keys,PAGESIZE);
 			pthread_mutex_unlock(&parent->meta_lock);
-			free(r->res);
+			free(r->keys);
 			break;
 		case LR_FLUSH_T:			
 			lr_req_wait((lsmtree_req_t*)r);
 			pthread_mutex_destroy(&r->meta_lock);
-			snode *temp_s=r->skip_data->header->list[1];
-			while(temp_s!=r->skip_data->header){
-				temp_s->req->end_req(temp_s->req);
-				temp_s=temp_s->list[1];
-			}
+			skiplist_free(r->skip_data);
 			break;
 		case LR_COMP_T:
 			lr_req_wait((lsmtree_req_t *)r);

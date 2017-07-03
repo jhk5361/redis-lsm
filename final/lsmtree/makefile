@@ -6,6 +6,10 @@ TOP_DIR=./
 LR: lsm_main.c lsmtree.c bptree.c utils.c measure.c skiplist.c threading.c LR_inter.c queue.c
 	gcc -g -o exefile/LR $^ -std=c99 -I$(TOP_DIR)/src -I$(TOP_DIR)/lsmtree -D_FILE_OFFSET_BITS=64 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_BSD_SOURCE -lpthread
 
+
+PLR: lsm_main.c lsmtree.c bptree.c utils.c measure.c skiplist.c threading.c LR_inter.c queue.c
+	gcc -g -o exefile/PLR $^ -std=c99 -I$(TOP_DIR)/src -I$(TOP_DIR)/lsmtree -D_FILE_OFFSET_BITS=64 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_BSD_SOURCE -DNPRINTOPTION -lpthread
+
 lsm_n: lsm_main.c lsmtree.c bloomfilter.c bptree.c utils.c queue.c utils.h heap.c measure.c skiplist.c threading.c#stack.c
 	gcc -g -o exefile/lsm_n.o $^ -std=c99 -D_DEFAULT_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -lpthread
 

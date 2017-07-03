@@ -13,6 +13,7 @@ typedef struct threading{
 	pthread_mutex_t terminate;
 	int number;
 	sktable *buf_data;
+	int level;
 	bool isactivated;
 	bool terminateflag;
 }threading;

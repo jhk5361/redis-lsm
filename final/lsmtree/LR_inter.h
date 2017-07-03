@@ -17,6 +17,7 @@
 /***/
 typedef struct sktable sktable;
 typedef struct skiplist skiplist;
+typedef struct keyset keyset;
 typedef struct {
 	int type;
 	KEYT key;
@@ -31,6 +32,7 @@ typedef struct lsmtree_gc_req_t{
 	uint64_t seq_number;
 	pthread_mutex_t meta_lock;
 	sktable *res;
+    keyset *keys;
 	struct lsmtree_gc_req_t *parent;
 
 	sktable *compt_headers;
@@ -46,6 +48,7 @@ typedef struct lsmtree_req_t{
 	uint64_t seq_number;
 	pthread_mutex_t meta_lock;
 	sktable *res;
+    keyset *keys;
 	struct lsmtree_req_t *parent;
 	
 	char *padding[2];

@@ -189,8 +189,8 @@ sktable *skiplist_meta_read(KEYT pbn, int fd,int seq,lsmtree_req_t *req){
 	*type=LR_DR_T;
 	temp->req=NULL;
 	temp->params[0]=(void*)type;
-	temp->res=(sktable*)malloc(sizeof(sktable));
-	temp->seq_number=seq;
+	temp->keys=(keyset*)malloc(PAGESIZE);
+    temp->seq_number=seq;
 	temp->end_req=req->end_req;
 	temp->parent=req;
 
@@ -198,7 +198,7 @@ sktable *skiplist_meta_read(KEYT pbn, int fd,int seq,lsmtree_req_t *req){
 	int number=0;
 	if((number=lseek64(fd,((off64_t)PAGESIZE)*(pbn),SEEK_SET))==-1)
 		printf("lseek error in meta read!\n");
-	read(fd,&temp->res->meta[0][0],PAGESIZE);
+	read(fd,temp->keys,PAGESIZE);
 	pthread_mutex_unlock(&dfd_lock);
 #ifdef ENABLE_LIBFTL
 	memio_read(mio,pbn,(uint64_t)(PAGESIZE),(uint8_t)&temp->res->meta[0][0]);
@@ -258,7 +258,6 @@ bool skiplist_keyset_read(keyset* k,char *res,int fd,lsmtree_req_t *req){
 	temp->params[0]=(void*)type;
 	temp->end_req=req->end_req;
 	temp->parent=req;
-	printf("keyset : %lu\n",k->key);
 	pthread_mutex_lock(&dfd_lock);
 	if(lseek64(fd,((off64_t)PAGESIZE)*(k->ppa),SEEK_SET)==-1)
 		printf("lseek error in meta read!\n");
@@ -267,6 +266,7 @@ bool skiplist_keyset_read(keyset* k,char *res,int fd,lsmtree_req_t *req){
 #ifdef ENABLE_LIBFTL
 	memio_read(mio,k->ppa,(uint64_t)(PAGESIZE),(uint8_t)res);
 #endif
+	printf("key : %ld \n",k->key);
 	temp->end_req(temp);
 	return 1;
 }
@@ -282,22 +282,22 @@ int skiplist_meta_write(skiplist *data,int fd, lsmtree_gc_req_t *req){
 	int i=0;
 	snode *temp=data->header->list[1];
 	while(temp!=data->header){
-		temp_req=(lsmtree_gc_req_t *)malloc(sizeof(lsmtree_gc_req_t));
+		temp_req=(lsmtree_gc_req_t*)malloc(sizeof(lsmtree_gc_req_t));
 		type=(uint8_t*)malloc(sizeof(uint8_t));
 		*type=LR_DW_T;
-		temp_req->res=(sktable*)malloc(sizeof(sktable));
+		temp_req->keys=(keyset*)malloc(PAGESIZE);
 		temp_req->parent=req;
 		temp_req->params[0]=(void*)type;
 		temp_req->end_req=req->end_req;
 		for(int i=0; i<KEYN/2; i++){
-			temp_req->res->meta[0][i].key=temp->key;
-			temp_req->res->meta[0][i].ppa=temp->ppa;
+			temp_req->keys[i].key=temp->key;
+			temp_req->keys[i].ppa=temp->ppa;
 			temp=temp->list[1];
 		}
 		pthread_mutex_lock(&dfd_lock);
 		if(lseek64(fd,((off64_t)PAGESIZE)*(ppa++),SEEK_SET)==-1)
 			printf("lseek error in meta read!\n");
-		write(fd,&temp_req->res->meta[0][0],PAGESIZE);
+		write(fd,temp_req->keys,PAGESIZE);
 		pthread_mutex_unlock(&dfd_lock);
 #ifdef ENABLE_LIBFTL
 		memio_write(mio,ppa++,(uint64_t)(PAGESIZE),(uint8_t)temp_req->res->meta[0]);
@@ -309,21 +309,19 @@ int skiplist_meta_write(skiplist *data,int fd, lsmtree_gc_req_t *req){
 }
 int skiplist_data_write(skiplist *data,int fd,lsmtree_gc_req_t * req){
 	KEYT where=ppa;
-	lsmtree_gc_req_t *child_req;
-	uint8_t * type;
+	lsmtree_req_t *child_req;
 	snode *temp=data->header->list[1];
 	req->skip_data=data;
 	while(temp!=data->header){
-		child_req=(lsmtree_gc_req_t*)malloc(sizeof(lsmtree_gc_req_t));
-		type=(uint8_t*)malloc(sizeof(uint8_t));
-		(*type)=LR_DDW_T;
-		child_req->params[0]=(void*)type;
-		child_req->end_req=req->end_req;
-		child_req->parent=req;
+        child_req=temp->req;
+		*((uint8_t*)child_req->params[0])=LR_DDW_T;
+		child_req->end_req=lr_end_req;
+		child_req->parent=(lsmtree_req_t*)req;
 		temp->ppa=ppa;
 		pthread_mutex_lock(&dfd_lock);
 		if(lseek64(fd,((off64_t)PAGESIZE)*(ppa),SEEK_SET)==-1)
 			printf("lseek error in meta read!\n");
+
 		write(fd,temp->value,PAGESIZE);
 		pthread_mutex_unlock(&dfd_lock);
 #ifdef ENABLE_LIBFTL

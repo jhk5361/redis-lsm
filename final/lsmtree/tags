@@ -5,47 +5,25 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 AM_LINK	Makefile	/^AM_LINK= $(AM_V_CCLD)$(CXX) $^ $(EXEC_LDFLAGS) -o $@ $(LDFLAGS) $(COVERAGEFLAGS) $(LIBFTL_LIB)$/;"	m
-BOOL	btree/bptree.h	8;"	d
 BOOL	utils.h	49;"	d
 BUSYPOINT	utils.h	17;"	d
-BYTE_BITS	temp/m_bloomfilter.h	49;"	d
-BaseBloomFilter	temp/m_bloomfilter.h	/^} BaseBloomFilter;$/;"	t	typeref:struct:__anon2
-BloomFileHead	temp/m_bloomfilter.h	/^} BloomFileHead;$/;"	t	typeref:struct:__anon3
-BloomFilter_Add	temp/m_bloomfilter.h	/^FORCE_INLINE int BloomFilter_Add(BaseBloomFilter *pstBloomfilter, const void * key, int len)$/;"	f
-BloomFilter_Check	temp/m_bloomfilter.h	/^FORCE_INLINE int BloomFilter_Check(BaseBloomFilter *pstBloomfilter, const void * key, int len)$/;"	f
 CC	Makefile	/^CC=${HOST}-g++ -D_FILE_OFFSET_BITS=64$/;"	m
-COUNT	simple/test.cpp	12;"	d	file:
 CXX	Makefile	/^CXX=${HOST}-g++ -D_FILE_OFFSET_BITS=64$/;"	m
 CXXFLGAS	Makefile	/^CXXFLGAS = $(CFLAGS)$/;"	m
 Child	bptree.h	/^typedef union Child{$/;"	u
 Child	bptree.h	/^}Child;$/;"	t	typeref:union:Child
-Child	btree/bptree.h	/^typedef union Child{$/;"	u
-Child	btree/bptree.h	/^}Child;$/;"	t	typeref:union:Child
 ENDMERGE	utils.h	25;"	d
 EXTRA_CFLAGS	Makefile	/^EXTRA_CFLAGS= -Wno-maybe-uninitialized$/;"	m
 EXTRA_LDFLAGS	Makefile	/^EXTRA_LDFLAGS= -march=armv7-a -mtune=cortex-a9 -mfpu=neon -Wl,--fix-cortex-a8$/;"	m
 Entry	bptree.h	/^typedef struct Entry{$/;"	s
 Entry	bptree.h	/^}Entry;$/;"	t	typeref:struct:Entry
-Entry	btree/bptree.h	/^typedef struct Entry{$/;"	s
-Entry	btree/bptree.h	/^}Entry;$/;"	t	typeref:struct:Entry
-Entry	not_uses/heap.h	/^typedef struct Entry Entry;$/;"	t	typeref:struct:Entry
 FILTERBIT	utils.h	10;"	d
 FILTERFUNC	utils.h	9;"	d
 FILTERSIZE	utils.h	8;"	d
-FORCE_INLINE	temp/m_bloomfilter.h	47;"	d
-FreeBloomFilter	temp/m_bloomfilter.h	/^inline int FreeBloomFilter(BaseBloomFilter *pstBloomfilter)$/;"	f
-GETBIT	temp/m_bloomfilter.h	53;"	d
 GETTEST	utils.h	30;"	d
 HOST	Makefile	/^HOST=arm-linux-gnueabihf$/;"	m
-Hash	not_uses/hash.h	/^typedef struct Hash{$/;"	s
-Hash	not_uses/hash.h	/^}Hash;$/;"	t	typeref:struct:Hash
-Heap	not_uses/heap.h	/^typedef struct Heap{$/;"	s
-Heap	not_uses/heap.h	/^}Heap;$/;"	t	typeref:struct:Heap
-Hnode	not_uses/hash.h	/^typedef struct Hnode{$/;"	s
 INPUTSIZE	utils.h	16;"	d
-InitBloomFilter	temp/m_bloomfilter.h	/^inline int InitBloomFilter(BaseBloomFilter *pstBloomfilter, uint32_t dwSeed, uint32_t dwMaxItems, double dProbFalse)$/;"	f
 KEYN	utils.h	12;"	d
-KEYT	btree/bptree.h	5;"	d
 KEYT	utils.h	7;"	d
 LD	Makefile	/^LD=${HOST}-ld$/;"	m
 LEVELN	utils.h	15;"	d
@@ -59,9 +37,6 @@ LR_FLUSH_T	LR_inter.h	12;"	d
 LR_READ_T	LR_inter.h	9;"	d
 LR_WRITE_T	LR_inter.h	10;"	d
 LSM	LR_inter.c	/^lsmtree *LSM;$/;"	v
-LSM	not_uses/lsm_main_org.c	/^lsmtree *LSM;$/;"	v
-LoadBloomFilterFromFile	temp/m_bloomfilter.h	/^inline int LoadBloomFilterFromFile(BaseBloomFilter *pstBloomfilter, char *szFileName)$/;"	f
-MAXC	btree/bptree.h	4;"	d
 MAXC	utils.h	26;"	d
 MAXNODE	utils.h	27;"	d
 MAX_L	skiplist.h	3;"	d
@@ -69,7 +44,6 @@ MC	utils.h	41;"	d
 MC	utils.h	46;"	d
 ME	utils.h	39;"	d
 ME	utils.h	44;"	d
-MIX_UINT64	temp/m_bloomfilter.h	50;"	d
 MP	utils.h	40;"	d
 MP	utils.h	45;"	d
 MS	utils.h	38;"	d
@@ -77,262 +51,118 @@ MS	utils.h	43;"	d
 MUL	utils.h	14;"	d
 MeasureTime	measure.h	/^typedef struct MeasureTime{$/;"	s
 MeasureTime	measure.h	/^}MeasureTime;$/;"	t	typeref:struct:MeasureTime
-MurmurHash2_x64	temp/m_bloomfilter.h	/^FORCE_INLINE uint64_t MurmurHash2_x64 ( const void * key, int len, uint32_t seed )$/;"	f
 Node	bptree.h	/^typedef struct Node{$/;"	s
 Node	bptree.h	/^}Node;$/;"	t	typeref:struct:Node
-Node	btree/bptree.h	/^typedef struct Node{$/;"	s
-Node	btree/bptree.h	/^}Node;$/;"	t	typeref:struct:Node
 OBJECTS	Makefile	/^OBJECTS = lsm_main.o bloomfilter.o bptree.o threading.o queue.o heap.o measure.o skiplist.o lsmtree.o$/;"	m
-PAGESIZE	simple/test.cpp	11;"	d	file:
 PAGESIZE	utils.h	13;"	d
 QUEUE_H_	queue.h	9;"	d
-Queue	queue/queue.h	/^typedef struct Queue{$/;"	s
-Queue	queue/queue.h	/^}Queue;$/;"	t	typeref:struct:Queue
 READTEST	utils.h	29;"	d
-ROTL32	temp/murmur3.c	3;"	d	file:
-RealResetBloomFilter	temp/m_bloomfilter.h	/^inline int RealResetBloomFilter(BaseBloomFilter *pstBloomfilter)$/;"	f
-ResetBloomFilter	temp/m_bloomfilter.h	/^inline int ResetBloomFilter(BaseBloomFilter *pstBloomfilter)$/;"	f
 SEQUENCE	utils.h	28;"	d
-SETBIT	temp/m_bloomfilter.h	52;"	d
-SKIPLIST_MAX_LEVEL	temp/skiplist.c	6;"	d	file:
 SKIP_META	utils.h	34;"	d
 SNODE_SIZE	utils.h	32;"	d
 STARTMERGE	utils.h	24;"	d
-SaveBloomFilterToFile	temp/m_bloomfilter.h	/^inline int SaveBloomFilterToFile(BaseBloomFilter *pstBloomfilter, char *szFileName)$/;"	f
-Stack	not_uses/stack.h	/^typedef struct Stack{$/;"	s
-Stack	not_uses/stack.h	/^}Stack;$/;"	t	typeref:struct:Stack
 THREAD	utils.h	20;"	d
 THREADNUM	utils.h	19;"	d
 THREADQN	utils.h	18;"	d
 TOP_DIR	makefile	/^TOP_DIR=.\/$/;"	m
-_CalcBloomFilterParam	temp/m_bloomfilter.h	/^static inline void _CalcBloomFilterParam(uint32_t n, double p, uint32_t *pm, uint32_t *pk)$/;"	f
-__BLOOMFILTER_H__	not_uses/bloomfilter.h	2;"	d
-__BLOOMFILTER_H__	temp/bloomfilter.h	2;"	d
-__BLOOMFILTER_VERSION__	temp/m_bloomfilter.h	20;"	d
 __BP__HEADER__	bptree.h	2;"	d
-__BP__HEADER__	btree/bptree.h	2;"	d
-__HASH_H__	not_uses/hash.h	2;"	d
-__HEAP_H__	not_uses/heap.h	2;"	d
-__H_MURMUR3_H__	temp/murmur3.h	2;"	d
 __LR_INTER_H__	LR_inter.h	2;"	d
 __LSM_HEADER__	lsmtree.h	2;"	d
 __MEASURE_H__	measure.h	2;"	d
-__MGAIC_CODE__	temp/m_bloomfilter.h	21;"	d
-__MICRO_BLOOMFILTER_H__	temp/m_bloomfilter.h	2;"	d
-__Q_HEADER__	queue/queue.h	2;"	d
 __SKIPLIST_HEADER	skiplist.h	2;"	d
-__SKIP_HEADER__	temp/skiplist.h	2;"	d
 __STDC_FORMAT_MACROS	threading.c	11;"	d	file:
-__S_HEADER__	not_uses/stack.h	2;"	d
 __THREAD_H__	threading.h	2;"	d
 __UTIL_H__	utils.h	2;"	d
 _node	queue.h	/^typedef struct _node {$/;"	s
 _queue	queue.h	/^typedef struct _queue{$/;"	s
-activate_check	not_uses/lsm_main_org.c	/^pthread_mutex_t activate_check[THREADNUM];$/;"	v
 activated_check	threading.h	/^	pthread_mutex_t activated_check;$/;"	m	struct:threading
 activatednum	threading.h	/^	int activatednum;$/;"	m	struct:threadset
 add_rear	queue.c	/^void add_rear(queue *qptr, void *value){$/;"	f
 argv	lsmtree_org.c	/^KEYT argv[3];$/;"	v
-argv	not_uses/lsm_main_org.c	/^KEYT argv[2];$/;"	v
-argv_check	not_uses/lsm_main_org.c	/^pthread_mutex_t argv_check;$/;"	v
 binary_search_node	bptree.c	/^Node* binary_search_node(Node *node, KEYT key){$/;"	f
-bit_clr	not_uses/bloomfilter.c	9;"	d	file:
-bit_clr	temp/bloomfilter.c	10;"	d	file:
-bit_get	not_uses/bloomfilter.c	8;"	d	file:
-bit_get	temp/bloomfilter.c	9;"	d	file:
-bit_set	not_uses/bloomfilter.c	7;"	d	file:
-bit_set	temp/bloomfilter.c	8;"	d	file:
-bit_vector	not_uses/bloomfilter.h	/^	unsigned char *bit_vector;$/;"	m	struct:bloomfilter
-bit_vector	temp/bloomfilter.h	/^	unsigned char bit_vector[1];$/;"	m	struct:bloomfilter
-bloom_hash	temp/m_bloomfilter.h	/^FORCE_INLINE void bloom_hash(BaseBloomFilter *pstBloomfilter, const void * key, int len)$/;"	f
-bloomfilter	btree/bptree.h	/^typedef struct bloomfilter bloomfilter;$/;"	t	typeref:struct:bloomfilter
-bloomfilter	not_uses/bloomfilter.h	/^typedef struct bloomfilter {$/;"	s
-bloomfilter	not_uses/bloomfilter.h	/^}bloomfilter;$/;"	t	typeref:struct:bloomfilter
-bloomfilter	temp/bloomfilter.h	/^typedef struct bloomfilter {$/;"	s
-bloomfilter	temp/bloomfilter.h	/^}bloomfilter;$/;"	t	typeref:struct:bloomfilter
-bloomfilter_free	not_uses/bloomfilter.c	/^void bloomfilter_free(bloomfilter *filter){$/;"	f
-bloomfilter_get	not_uses/bloomfilter.c	/^bloomfilter_get(struct bloomfilter *bloomfilter, const void *key, size_t len)$/;"	f
-bloomfilter_get	temp/bloomfilter.c	/^bloomfilter_get(struct bloomfilter *bloomfilter, const void *key, size_t len)$/;"	f
-bloomfilter_init	not_uses/bloomfilter.c	/^bloomfilter_init(struct bloomfilter *bloomfilter)$/;"	f
-bloomfilter_init	temp/bloomfilter.c	/^bloomfilter_init(struct bloomfilter *bloomfilter, unsigned int m, unsigned int k)$/;"	f
-bloomfilter_set	not_uses/bloomfilter.c	/^bloomfilter_set(struct bloomfilter *bloomfilter, const void *key, size_t len)$/;"	f
-bloomfilter_set	temp/bloomfilter.c	/^bloomfilter_set(struct bloomfilter *bloomfilter, const void *key, size_t len)$/;"	f
-body	not_uses/heap.h	/^	Entry **body;$/;"	m	struct:Heap
-bool	btree/bptree.h	/^typedef enum{false,true} bool;$/;"	t	typeref:enum:__anon1
-bool	utils.h	/^typedef enum{false,true} bool;$/;"	t	typeref:enum:__anon4
-bpIterator	btree/bptree.h	/^typedef struct bpIterator{$/;"	s
-bpIterator	btree/bptree.h	/^}bpIterator;$/;"	t	typeref:struct:bpIterator
+bool	utils.h	/^typedef enum{false,true} bool;$/;"	t	typeref:enum:__anon2
 buf	lsmtree.h	/^	buffer buf;$/;"	m	struct:lsmtree
 buf_data	threading.h	/^	sktable *buf_data;$/;"	m	struct:threading
-buf_header_lock	not_uses/lsm_main_org.c	/^pthread_mutex_t buf_header_lock;$/;"	v
 buffer	lsmtree.h	/^typedef struct buffer{$/;"	s
 buffer	lsmtree.h	/^}buffer;$/;"	t	typeref:struct:buffer
 buffer_free	lsmtree.c	/^void buffer_free(buffer *buf){$/;"	f
 buffer_free	lsmtree_org.c	/^void buffer_free(buffer *buf){$/;"	f
-cInitFlag	temp/m_bloomfilter.h	/^    uint8_t cInitFlag;                              \/\/ 初始化标志，为0时的第一次Add()会对stFilter[]做初始化$/;"	m	struct:__anon2
-cResv	temp/m_bloomfilter.h	/^    uint8_t cResv[3];$/;"	m	struct:__anon2
 children	bptree.h	/^	Child children[MAXC+1];$/;"	m	struct:Node
-children	btree/bptree.h	/^	Child children[MAXC+1];$/;"	m	struct:Node
 cmp	rand.c	/^int cmp(const void *a, const void *b){$/;"	f
 cnt	measure.h	/^	int cnt;$/;"	m	struct:MeasureTime
-compaction	lsmtree.c	/^bool compaction(lsmtree *LSM,level *src, level *des,lsmtree_gc_req_t * req){$/;"	f
+compaction	lsmtree.c	/^bool compaction(lsmtree *LSM,level *src, level *des,Entry *ent,lsmtree_gc_req_t * req){$/;"	f
 compaction	lsmtree_org.c	/^bool compaction(lsmtree *LSM,level *src, level *des,int n){$/;"	f
-compaction_MAX	not_uses/lsm_main_org.c	/^struct timeval compaction_MAX;$/;"	v	typeref:struct:timeval
 compt_headers	LR_inter.h	/^	sktable *compt_headers;$/;"	m	struct:lsmtree_gc_req_t
 consum	lsmtree_org.c	/^sem_t consum;$/;"	v
-content	not_uses/stack.h	/^	struct Entry **content;$/;"	m	struct:Stack	typeref:struct:Stack::Entry
-content	queue/queue.h	/^	struct sktable **content;$/;"	m	struct:Queue	typeref:struct:Queue::sktable
 count	bptree.h	/^	short count;$/;"	m	struct:Node
-count	btree/bptree.h	/^	int count;$/;"	m	struct:Entry
-count	btree/bptree.h	/^	int count;$/;"	m	struct:level
-count	btree/bptree.h	/^	short count;$/;"	m	struct:Node
-count	not_uses/stack.h	/^	int count;$/;"	m	struct:Stack
 count	queue.h	/^	int count;$/;"	m	struct:_queue
-count	queue/queue.h	/^	int count;$/;"	m	struct:Queue
 counter	threading.h	/^	int counter;$/;"	m	struct:threadset
 create_queue	queue.c	/^queue* create_queue(){$/;"	f
-dProbFalse	temp/m_bloomfilter.h	/^    double dProbFalse;                              \/\/ p - 假阳概率 (输入量，比如万分之一：0.00001)$/;"	m	struct:__anon2
-dProbFalse	temp/m_bloomfilter.h	/^    double dProbFalse;                              \/\/ p - 假阳概率 (输入量，比如万分之一：0.00001)$/;"	m	struct:__anon3
 data	lsmtree.h	/^	sktable *data;$/;"	m	struct:buffer
-debug_m	not_uses/lsm_main_org.c	/^pthread_mutex_t debug_m;$/;"	v
 debug_m	threading.h	/^	pthread_mutex_t debug_m;$/;"	m	struct:threadset
 debugkey	lsmtree_org.c	/^int debugkey=0;$/;"	v
 depth	bptree.h	/^	int depth;$/;"	m	struct:level
-depth	btree/bptree.h	/^	int depth;$/;"	m	struct:level
-dequeue	queue/queue.c	/^struct sktable *dequeue(Queue *q){$/;"	f
 destroy_queue	queue.c	/^void destroy_queue(queue *qptr){$/;"	f
 dfd	lsmtree.h	/^	int dfd;$/;"	m	struct:lsmtree
-dfd_lock	not_uses/lsm_main_org.c	/^pthread_mutex_t dfd_lock;$/;"	v
 dfd_lock	skiplist.c	/^pthread_mutex_t dfd_lock;$/;"	v
 disk	lsmtree.h	/^	level *disk[LEVELN];$/;"	m	struct:buffer
 donothing	measure.c	/^void donothing(MeasureTime *t){$/;"	f
 donothing2	measure.c	/^void donothing2(MeasureTime *t,char *a){$/;"	f
-dwCount	temp/m_bloomfilter.h	/^    uint32_t dwCount;                               \/\/ Add()的计数，超过MAX_BLOOMFILTER_N则返回失败$/;"	m	struct:__anon2
-dwCount	temp/m_bloomfilter.h	/^    uint32_t dwCount;$/;"	m	struct:__anon3
-dwFileCrc	temp/m_bloomfilter.h	/^    uint32_t dwFileCrc;                             \/\/ (未使用)整个文件的校验和$/;"	m	struct:__anon3
-dwFilterBits	temp/m_bloomfilter.h	/^    uint32_t dwFilterBits;                          \/\/ m = ceil((n * log(p)) \/ log(1.0 \/ (pow(2.0, log(2.0))))); - BloomFilter的比特数$/;"	m	struct:__anon2
-dwFilterBits	temp/m_bloomfilter.h	/^    uint32_t dwFilterBits;                          \/\/ m = ceil((n * log(p)) \/ log(1.0 \/ (pow(2.0, log(2.0))))); - BloomFilter的比特数$/;"	m	struct:__anon3
-dwFilterSize	temp/m_bloomfilter.h	/^    uint32_t dwFilterSize;                          \/\/ dwFilterBits \/ BYTE_BITS$/;"	m	struct:__anon2
-dwFilterSize	temp/m_bloomfilter.h	/^    uint32_t dwFilterSize;                          \/\/ 后面Filter的Buffer长度$/;"	m	struct:__anon3
-dwHashFuncs	temp/m_bloomfilter.h	/^    uint32_t dwHashFuncs;                           \/\/ k = round(log(2.0) * m \/ n); - 哈希函数个数$/;"	m	struct:__anon2
-dwHashFuncs	temp/m_bloomfilter.h	/^    uint32_t dwHashFuncs;                           \/\/ k = round(log(2.0) * m \/ n); - 哈希函数个数$/;"	m	struct:__anon3
-dwMagicCode	temp/m_bloomfilter.h	/^    uint32_t dwMagicCode;                           \/\/ 文件头部标识，填充 __MGAIC_CODE__$/;"	m	struct:__anon3
-dwMaxItems	temp/m_bloomfilter.h	/^    uint32_t dwMaxItems;                            \/\/ n - BloomFilter中最大元素个数 (输入量)$/;"	m	struct:__anon2
-dwMaxItems	temp/m_bloomfilter.h	/^    uint32_t dwMaxItems;                            \/\/ n - BloomFilter中最大元素个数 (输入量)$/;"	m	struct:__anon3
-dwResv	temp/m_bloomfilter.h	/^    uint32_t dwResv[6];$/;"	m	struct:__anon3
-dwSeed	temp/m_bloomfilter.h	/^    uint32_t dwSeed;                                \/\/ MurmurHash的种子偏移量$/;"	m	struct:__anon2
-dwSeed	temp/m_bloomfilter.h	/^    uint32_t dwSeed;$/;"	m	struct:__anon3
 end	bptree.h	/^	KEYT end;$/;"	m	struct:Entry
-end	btree/bptree.h	/^	Node *start,*end,*now;$/;"	m	struct:bpIterator
 end	measure.h	/^	struct timeval start,end;$/;"	m	struct:linktime	typeref:struct:linktime::
-end	not_uses/hash.h	/^	int end;$/;"	m	struct:Hash
 end	skiplist.h	/^	KEYT start,end;$/;"	m	struct:skiplist
-end	temp/skiplist.h	/^	unsigned long  start,end;$/;"	m	struct:skiplist
-end_req	LR_inter.h	/^	uint8_t (*end_req)(struct lsmtree_gc_req_t*);$/;"	m	struct:lsmtree_gc_req_t
-end_req	LR_inter.h	/^	uint8_t (*end_req)(struct lsmtree_req_t*);	$/;"	m	struct:lsmtree_req_t
-end_t	simple/test.cpp	/^struct timeval start_t,end_t;$/;"	v	typeref:struct:
-end_time	simple/time_.cpp	/^double end_time(struct timeval *time_) {$/;"	f
-enqueue	queue/queue.c	/^bool enqueue(Queue *q, struct sktable *input){$/;"	f
+end_req	LR_inter.h	/^	int8_t (*end_req)(struct lsmtree_gc_req_t*);$/;"	m	struct:lsmtree_gc_req_t
+end_req	LR_inter.h	/^	int8_t (*end_req)(struct lsmtree_req_t*);	$/;"	m	struct:lsmtree_req_t
 entry	bptree.h	/^	struct Entry *entry;$/;"	m	union:Child	typeref:struct:Child::Entry
-entry	btree/bptree.h	/^	struct Entry *entry;$/;"	m	union:Child	typeref:struct:Child::Entry
-err_check	not_uses/lsm_main_org.c	/^pthread_mutex_t err_check;$/;"	v
 errcnt	threading.h	/^	int errcnt;$/;"	m	struct:threadset
-error_cnt	not_uses/lsm_main_org.c	/^int error_cnt;$/;"	v
-false	btree/bptree.h	/^typedef enum{false,true} bool;$/;"	e	enum:__anon1
-false	utils.h	/^typedef enum{false,true} bool;$/;"	e	enum:__anon4
+false	utils.h	/^typedef enum{false,true} bool;$/;"	e	enum:__anon2
 filenumber	lsmtree_org.c	/^static int filenumber=0;$/;"	v	file:
-filter	btree/bptree.h	/^	bloomfilter *filter;$/;"	m	struct:Entry
-find_victim	btree/bptree.c	/^Entry *find_victim(level* lev){$/;"	f
-fmix32	temp/murmur3.c	/^fmix32(uint32_t h)$/;"	f
-forward	temp/skiplist.h	/^    struct snode**forward;$/;"	m	struct:snode	typeref:struct:snode::snode
 free_entry	bptree.c	/^void free_entry(Entry *entry){$/;"	f
-free_entry	btree/bptree.c	/^void *free_entry(Entry *entry){$/;"	f
 front	queue.h	/^	nptr front;$/;"	m	struct:_queue
-front	queue/queue.h	/^	int front,rear;$/;"	m	struct:Queue
 gc_lock	threading.h	/^	pthread_mutex_t gc_lock;$/;"	m	struct:threadset
 gc_q	threading.h	/^	queue *gc_q;$/;"	m	struct:threadset
 gc_thread	threading.h	/^	threading gc_thread;$/;"	m	struct:threadset
 get	lsmtree.c	/^int get(lsmtree *LSM,KEYT key,char *ret){\/*$/;"	f
 get	lsmtree_org.c	/^int get(lsmtree *LSM,KEYT key,char *ret){$/;"	f
 getLevel	skiplist.c	/^static int getLevel(){$/;"	f	file:
-getNext	btree/bptree.c	/^Entry *getNext(bpIterator *iter){$/;"	f
-hash_data_read	not_uses/hash.c	/^bool hash_data_read(Hash *res,int pbn, int fd){$/;"	f
-hash_data_write	not_uses/hash.c	/^bool hash_data_write(Hash *src,int key, int fd){$/;"	f
-hash_find	not_uses/hash.c	/^bool hash_find(Hash *des, int key, char *res){$/;"	f
-hash_free	not_uses/hash.c	/^void hash_free(Hash *input){$/;"	f
-hash_hnode_find	not_uses/hash.c	/^hnode * hash_hnode_find(Hash *des,int key){$/;"	f
-hash_hnode_read	not_uses/hash.c	/^bool hash_hnode_read(hnode *src, char *value, int fd){$/;"	f
-hash_init	not_uses/hash.c	/^Hash* hash_init(Hash *input){$/;"	f
-hash_insert	not_uses/hash.c	/^bool hash_insert(Hash *des, int key, char *value){$/;"	f
-hash_meta_read	not_uses/hash.c	/^Hash *hash_meta_read(int pbn, int fd){$/;"	f
-hash_meta_write	not_uses/hash.c	/^bool hash_meta_write(Hash *src,int key, int fd){$/;"	f
-hash_read	not_uses/hash.c	/^Hash * hash_read(int pbn, int fd){$/;"	f
-hash_write	not_uses/hash.c	/^bool hash_write(Hash *src, int pbn,int fd){$/;"	f
-hashfunction	not_uses/hash.c	/^int hashfunction(int key){$/;"	f
 header	measure.h	/^	linktime *header;$/;"	m	struct:MeasureTime
 header	skiplist.h	/^	snode *header;$/;"	m	struct:skiplist
-header	temp/skiplist.h	/^    struct snode *header;$/;"	m	struct:skiplist	typeref:struct:skiplist::snode
 header_read_argv_check	lsmtree_org.c	/^pthread_mutex_t header_read_argv_check;$/;"	v
-heap_free	not_uses/heap.c	/^void heap_free(Heap *h){$/;"	f
-heap_function	not_uses/heap.c	/^bool heap_function(Entry *a, Entry *b){$/;"	f
-heap_init	not_uses/heap.c	/^void heap_init(Heap *h,int size){$/;"	f
-heap_pop	not_uses/heap.c	/^Entry* heap_pop(Heap *h){$/;"	f
-heap_push	not_uses/heap.c	/^bool heap_push(Heap *h,Entry *input){$/;"	f
-hfd_lock	not_uses/lsm_main_org.c	/^pthread_mutex_t hfd_lock;$/;"	v
-hnode	not_uses/hash.h	/^}hnode;$/;"	t	typeref:struct:Hnode
 hppa	skiplist.h	/^	KEYT hppa;$/;"	m	struct:skiplist
 id	threading.h	/^	pthread_t id;$/;"	m	struct:threading
 init_lsm	lsmtree.c	/^lsmtree* init_lsm(lsmtree *res){$/;"	f
 init_lsm	lsmtree_org.c	/^lsmtree* init_lsm(lsmtree *res){$/;"	f
-inthash	not_uses/bloomfilter.c	/^int inthash(int key)$/;"	f
 is_compt_needed	lsmtree.c	/^bool is_compt_needed(lsmtree *input, KEYT level){$/;"	f
 is_flush_needed	lsmtree.c	/^bool is_flush_needed(lsmtree *input){$/;"	f
-isactivated	not_uses/lsm_main_org.c	/^int isactivated[THREADNUM];$/;"	v
 isactivated	threading.h	/^	bool isactivated;$/;"	m	struct:threading
-iterator	temp/skiplist.h	/^    struct snode *iterator;$/;"	m	struct:skiplist	typeref:struct:skiplist::snode
-k	not_uses/bloomfilter.h	/^	unsigned int  k; \/\/hash function number;$/;"	m	struct:bloomfilter
-k	temp/bloomfilter.h	/^	unsigned int  k; \/\/hash function number;$/;"	m	struct:bloomfilter
-key	LR_inter.h	/^	KEYT key;$/;"	m	struct:__anon5
+key	LR_inter.h	/^	KEYT key;$/;"	m	struct:__anon1
 key	bptree.h	/^	KEYT key;$/;"	m	struct:Entry
-key	btree/bptree.h	/^	KEYT key;$/;"	m	struct:Entry
-key	not_uses/hash.h	/^	int key;$/;"	m	struct:Hnode
 key	skiplist.h	/^	KEYT key;$/;"	m	struct:keyset
 key	skiplist.h	/^	KEYT key;$/;"	m	struct:snode
-key	temp/skiplist.h	/^    unsigned long key;$/;"	m	struct:snode
 keySet	rand.c	/^KEYT keySet[INPUTSIZE];$/;"	v
+keys	LR_inter.h	/^    keyset *keys;$/;"	m	struct:lsmtree_gc_req_t
+keys	LR_inter.h	/^    keyset *keys;$/;"	m	struct:lsmtree_req_t
+keyset	LR_inter.h	/^typedef struct keyset keyset;$/;"	t	typeref:struct:keyset
 keyset	skiplist.h	/^typedef struct keyset{$/;"	s
 keyset	skiplist.h	/^}keyset;$/;"	t	typeref:struct:keyset
-last	not_uses/heap.h	/^	int last;$/;"	m	struct:Heap
 lastB	lsmtree.h	/^	skiplist *lastB;$/;"	m	struct:buffer
 leaf	bptree.h	/^	bool leaf;$/;"	m	struct:Node
-leaf	btree/bptree.h	/^	bool leaf;$/;"	m	struct:Node
 lev_addr	lsmtree.h	/^	int lev_addr[LEVELN];$/;"	m	struct:table
 level	bptree.h	/^typedef struct level{$/;"	s
 level	bptree.h	/^}level;$/;"	t	typeref:struct:level
-level	btree/bptree.h	/^typedef struct level{$/;"	s
-level	btree/bptree.h	/^}level;$/;"	t	typeref:struct:level
 level	skiplist.h	/^	int level;$/;"	m	struct:snode
 level	skiplist.h	/^	uint8_t level;$/;"	m	struct:skiplist
-level	temp/skiplist.h	/^    int level;$/;"	m	struct:skiplist
 level_delete	bptree.c	/^Node * level_delete(level *lev, KEYT key){$/;"	f
-level_delete	btree/bptree.c	/^Node * level_delete(level *lev, KEYT key){$/;"	f
 level_delete_restructuring	bptree.c	/^Node *level_delete_restructuring(level *lev, Node *target){$/;"	f
-level_delete_restructuring	btree/bptree.c	/^Node *level_delete_restructuring(level *lev, Node *target){$/;"	f
 level_directory_insert	bptree.c	/^Node *level_directory_insert(level *lev,Node *target, KEYT sep, Node *prev, Node *next){$/;"	f
-level_directory_insert	btree/bptree.c	/^Node *level_directory_insert(level *lev,Node *target, KEYT sep, Node *prev, Node *next){$/;"	f
 level_entry_copy	bptree.c	/^Entry *level_entry_copy(Entry *input){$/;"	f
 level_find	bptree.c	/^Entry *level_find(level *lev, KEYT key){$/;"	f
-level_find	btree/bptree.c	/^Entry *level_find(level *lev, KEYT key){$/;"	f
 level_find_leafnode	bptree.c	/^Node *level_find_leafnode(level *lev, KEYT key){$/;"	f
-level_find_leafnode	btree/bptree.c	/^Node *level_find_leafnode(level *lev, KEYT key){$/;"	f
 level_free	bptree.c	/^void level_free(level *lev){$/;"	f
-level_free	btree/bptree.c	/^void level_free(level *lev){$/;"	f
 level_getFirst	bptree.c	/^Entry *level_getFirst(level *lev){$/;"	f
 level_get_victim	bptree.c	/^Entry *level_get_victim(level *lev){$/;"	f
 level_init	bptree.c	/^level *level_init(level* input, int size){$/;"	f
-level_init	btree/bptree.c	/^level *level_init(level* input, int size){$/;"	f
 level_insert	bptree.c	/^Node *level_insert(level* lev, Entry *entry){$/;"	f
-level_insert	btree/bptree.c	/^Node *level_insert(level* lev, Entry *entry){$/;"	f
 level_range_find	bptree.c	/^Entry **level_range_find(level *lev, KEYT start, KEYT end){$/;"	f
 level_read_lock	lsmtree.c	/^pthread_mutex_t level_read_lock[LEVELN+2];$/;"	v
 level_read_locking	lsmtree.c	/^void level_read_locking(int level){$/;"	f
@@ -344,15 +174,15 @@ level_write_unlocking	lsmtree.c	/^void level_write_unlocking(int level){$/;"	f
 linktime	measure.h	/^typedef struct linktime{$/;"	s
 linktime	measure.h	/^}linktime;$/;"	t	typeref:struct:linktime
 list	skiplist.h	/^	struct snode **list;$/;"	m	struct:snode	typeref:struct:snode::snode
-lr_end_req	LR_inter.c	/^uint8_t lr_end_req(lsmtree_req_t *r){$/;"	f
-lr_gc_end_req	LR_inter.c	/^uint8_t lr_gc_end_req(lsmtree_gc_req_t *r){$/;"	f
-lr_gc_make_req	LR_inter.c	/^uint8_t lr_gc_make_req(uint8_t t_num){$/;"	f
-lr_inter_free	LR_inter.c	/^uint8_t lr_inter_free(){$/;"	f
-lr_inter_init	LR_inter.c	/^uint8_t lr_inter_init(){$/;"	f
-lr_is_gc_needed	LR_inter.c	/^uint8_t lr_is_gc_needed(){$/;"	f
-lr_is_supbusy	LR_inter.c	/^uint8_t lr_is_supbusy(){$/;"	f
-lr_make_req	LR_inter.c	/^uint8_t lr_make_req(req_t *r){$/;"	f
-lr_req_wait	LR_inter.c	/^uint8_t lr_req_wait(lsmtree_req_t *input){$/;"	f
+lr_end_req	LR_inter.c	/^int8_t lr_end_req(lsmtree_req_t *r){$/;"	f
+lr_gc_end_req	LR_inter.c	/^int8_t lr_gc_end_req(lsmtree_gc_req_t *r){$/;"	f
+lr_gc_make_req	LR_inter.c	/^int8_t lr_gc_make_req(int8_t t_num){$/;"	f
+lr_inter_free	LR_inter.c	/^int8_t lr_inter_free(){$/;"	f
+lr_inter_init	LR_inter.c	/^int8_t lr_inter_init(){$/;"	f
+lr_is_gc_needed	LR_inter.c	/^int8_t lr_is_gc_needed(){$/;"	f
+lr_is_supbusy	LR_inter.c	/^int8_t lr_is_supbusy(){$/;"	f
+lr_make_req	LR_inter.c	/^int8_t lr_make_req(req_t *r){$/;"	f
+lr_req_wait	LR_inter.c	/^int8_t lr_req_wait(lsmtree_req_t *input){$/;"	f
 lsm_clear	lsmtree.c	/^void lsm_clear(lsmtree *input){$/;"	f
 lsm_clear	lsmtree_org.c	/^void *lsm_clear(lsmtree *input){$/;"	f
 lsm_free	lsmtree.c	/^void lsm_free(lsmtree *input){$/;"	f
@@ -367,35 +197,21 @@ lsmtree_gc_req_t	skiplist.h	/^typedef struct lsmtree_gc_req_t lsmtree_gc_req_t;$
 lsmtree_req_t	LR_inter.h	/^typedef struct lsmtree_req_t{$/;"	s
 lsmtree_req_t	LR_inter.h	/^}lsmtree_req_t;$/;"	t	typeref:struct:lsmtree_req_t
 lsmtree_req_t	skiplist.h	/^typedef struct lsmtree_req_t lsmtree_req_t;$/;"	t	typeref:struct:lsmtree_req_t
-m	not_uses/bloomfilter.h	/^	unsigned int  m; \/\/size$/;"	m	struct:bloomfilter
-m	temp/bloomfilter.h	/^	unsigned int  m; \/\/size$/;"	m	struct:bloomfilter
 m_size	bptree.h	/^	int m_size;$/;"	m	struct:level
-m_size	btree/bptree.h	/^	int m_size;$/;"	m	struct:level
 main	bptree.c	/^int main(){$/;"	f
-main	btree/bptree.c	/^int main(){$/;"	f
 main	lsm_main.c	/^int main(){$/;"	f
 main	measure.c	/^int main(){$/;"	f
-main	not_uses/bloomfilter.c	/^int main(){$/;"	f
-main	not_uses/hash.c	/^int main(){$/;"	f
-main	not_uses/heap.c	/^int main(){$/;"	f
-main	not_uses/lsm_main_org.c	/^int main(){$/;"	f
-main	not_uses/stack.c	/^int main(){$/;"	f
-main	queue/queue.c	/^int main(){$/;"	f
 main	rand.c	/^int main(){$/;"	f
-main	simple/test.cpp	/^int main() {$/;"	f
 main	skiplist.c	/^int main(){$/;"	f
-main	temp/bloomfilter.c	/^int main(){$/;"	f
-main	temp/skiplist.c	/^int main()$/;"	f
 main	utils.c	/^int main(){$/;"	f
 make_entry	bptree.c	/^Entry *make_entry(KEYT key,KEYT end,KEYT pbn1){$/;"	f
-make_entry	btree/bptree.c	/^Entry *make_entry(KEYT key, KEYT pbn, bloomfilter *filter){$/;"	f
 max_act	threading.h	/^	int max_act;$/;"	m	struct:threadset
 measure_end	measure.c	/^void measure_end(MeasureTime *m,char *format){$/;"	f
 measure_end	measure.c	/^void measure_end(MeasureTime *m,std::string input ){$/;"	f
 measure_init	measure.c	/^void measure_init(MeasureTime *m){$/;"	f
 measure_pop	measure.c	/^void measure_pop(MeasureTime *m){$/;"	f
 measure_start	measure.c	/^void measure_start(MeasureTime *m){$/;"	f
-memtable_get_count	not_uses/lsm_main_org.c	/^int memtable_get_count;$/;"	v
+mem_lock	lsmtree.c	/^pthread_mutex_t mem_lock;$/;"	v
 memtree	lsmtree.h	/^	skiplist *memtree;$/;"	m	struct:lsmtree
 merge	lsmtree.c	/^bool merge(lsmtree *LSM,KEYT target,skiplist *list){\/*$/;"	f
 merge	lsmtree_org.c	/^bool merge(lsmtree *LSM,int t){$/;"	f
@@ -405,24 +221,17 @@ meta_lock	LR_inter.h	/^	pthread_mutex_t meta_lock;$/;"	m	struct:lsmtree_gc_req_t
 meta_lock	LR_inter.h	/^	pthread_mutex_t meta_lock;$/;"	m	struct:lsmtree_req_t
 mio	lsmtree.c	/^memio_t* mio;$/;"	v
 mio	lsmtree_org.c	/^memio_t* mio;$/;"	v
-mt	not_uses/lsm_main_org.c	/^MeasureTime mt;$/;"	v
-murmur3_hash32	temp/murmur3.c	/^murmur3_hash32(const void *key, size_t len, uint32_t seed, void *out)$/;"	f
 mylist	skiplist.h	/^	skiplist *mylist;$/;"	m	struct:skIterator
 next	measure.h	/^	struct linktime * next;$/;"	m	struct:linktime	typeref:struct:linktime::linktime
 next	queue.h	/^	struct _node* next;$/;"	m	struct:_node	typeref:struct:_node::_node
 node	bptree.h	/^	struct Node *node;$/;"	m	union:Child	typeref:struct:Child::Node
-node	btree/bptree.h	/^	struct Node *node;$/;"	m	union:Child	typeref:struct:Child::Node
 node	queue.h	/^}node;$/;"	t	typeref:struct:_node
 node_init	bptree.c	/^Node *node_init(Node *node){$/;"	f
-node_init	btree/bptree.c	/^Node *node_init(Node *node){$/;"	f
-now	btree/bptree.h	/^	Node *start,*end,*now;$/;"	m	struct:bpIterator
 now	skiplist.h	/^	snode *now;$/;"	m	struct:skIterator
 now_number	LR_inter.h	/^	uint64_t now_number;$/;"	m	struct:lsmtree_gc_req_t
 now_number	LR_inter.h	/^	uint64_t now_number;$/;"	m	struct:lsmtree_req_t
 nptr	queue.h	/^typedef node* nptr;$/;"	t
-num	btree/bptree.h	/^	int num;$/;"	m	struct:bpIterator
 number	bptree.h	/^	int number;$/;"	m	struct:level
-number	not_uses/hash.h	/^	int number;$/;"	m	struct:Hnode
 number	threading.h	/^	int number;$/;"	m	struct:threading
 padding	LR_inter.h	/^	char *padding[2];$/;"	m	struct:lsmtree_req_t
 params	LR_inter.h	/^	void *params[4];$/;"	m	struct:lsmtree_gc_req_t
@@ -431,58 +240,35 @@ parent	LR_inter.h	/^	struct lsmtree_gc_req_t *parent;$/;"	m	struct:lsmtree_gc_re
 parent	LR_inter.h	/^	struct lsmtree_req_t *parent;$/;"	m	struct:lsmtree_req_t	typeref:struct:lsmtree_req_t::lsmtree_req_t
 parent	bptree.h	/^	struct Node *parent;$/;"	m	struct:Entry	typeref:struct:Entry::Node
 parent	bptree.h	/^	struct Node *parent;$/;"	m	struct:Node	typeref:struct:Node::Node
-parent	btree/bptree.h	/^	struct Node *parent;$/;"	m	struct:Node	typeref:struct:Node::Node
 pbn	bptree.h	/^	KEYT pbn;$/;"	m	struct:Entry
-pbn	btree/bptree.h	/^	KEYT pbn;$/;"	m	struct:Entry
-pbn	not_uses/hash.h	/^	int pbn;$/;"	m	struct:Hnode
-pdwHashPos	temp/m_bloomfilter.h	/^    uint32_t *pdwHashPos;                           \/\/ 存储上次hash得到的K个bit位置数组(由bloom_hash填充)$/;"	m	struct:__anon2
-pop	not_uses/stack.c	/^struct Entry * pop(Stack *s){$/;"	f
 ppa	skiplist.c	/^KEYT ppa=0;$/;"	v
 ppa	skiplist.h	/^	KEYT ppa;$/;"	m	struct:keyset
 ppa	skiplist.h	/^	KEYT ppa;$/;"	m	struct:snode
 processor	LR_inter.c	/^threadset processor;$/;"	v
-pstFilter	temp/m_bloomfilter.h	/^    unsigned char *pstFilter;                       \/\/ BloomFilter存储指针，使用malloc分配$/;"	m	struct:__anon2
-push	not_uses/stack.c	/^bool push(Stack *s,struct Entry* input){$/;"	f
 put	lsmtree.c	/^bool put(lsmtree *LSM,KEYT key, char *value,lsmtree_req_t *req){$/;"	f
 put	lsmtree_org.c	/^bool put(lsmtree *LSM,KEYT key, char *value){$/;"	f
 q	lsmtree_org.c	/^Queue *q;$/;"	v
 qlock	lsmtree_org.c	/^pthread_mutex_t qlock;$/;"	v
 queue	queue.h	/^}queue;$/;"	t	typeref:struct:_queue
-queue_free	queue/queue.c	/^void queue_free(Queue *q){$/;"	f
-queue_init	queue/queue.c	/^Queue *queue_init(Queue *q,int size){$/;"	f
-rand_level	temp/skiplist.c	/^int rand_level()$/;"	f
-range_find_iterator	btree/bptree.c	/^bpIterator *range_find_iterator(level *lev, KEYT start, KEYT end){$/;"	f
-read_thread	not_uses/lsm_main_org.c	/^pthread_t read_thread[THREADNUM];$/;"	v
-readbuffer_get_count	not_uses/lsm_main_org.c	/^int readbuffer_get_count;$/;"	v
 readcnt	lsmtree.c	/^uint32_t readcnt[LEVELN+2];$/;"	v
 rear	queue.h	/^	nptr rear;$/;"	m	struct:_queue
-rear	queue/queue.h	/^	int front,rear;$/;"	m	struct:Queue
-refs	temp/skiplist.h	/^    short refs;$/;"	m	struct:skiplist
 remove_front	queue.c	/^void* remove_front(queue *qptr){$/;"	f
 req	LR_inter.h	/^	req_t *req;$/;"	m	struct:lsmtree_req_t
 req	LR_inter.h	/^	req_t *req;\/\/always NULL$/;"	m	struct:lsmtree_gc_req_t
 req	skiplist.h	/^	struct lsmtree_req_t *req;$/;"	m	struct:snode	typeref:struct:snode::lsmtree_req_t
 req_lock	threading.h	/^	pthread_mutex_t req_lock;$/;"	m	struct:threadset
 req_q	threading.h	/^	queue *req_q;$/;"	m	struct:threadset
-req_t	LR_inter.h	/^}req_t;$/;"	t	typeref:struct:__anon5
+req_t	LR_inter.h	/^}req_t;$/;"	t	typeref:struct:__anon1
 res	LR_inter.h	/^	sktable *res;$/;"	m	struct:lsmtree_gc_req_t
 res	LR_inter.h	/^	sktable *res;$/;"	m	struct:lsmtree_req_t
 res_lock	threading.h	/^	pthread_mutex_t res_lock;$/;"	m	struct:threadset
 res_q	threading.h	/^	queue *res_q;$/;"	m	struct:threadset
 root	bptree.h	/^	Node *root;$/;"	m	struct:level
-root	btree/bptree.h	/^	Node *root;$/;"	m	struct:level
 separator	bptree.h	/^	KEYT separator[MAXC];$/;"	m	struct:Node
-separator	btree/bptree.h	/^	KEYT separator[MAXC];$/;"	m	struct:Node
 seq_number	LR_inter.h	/^	uint64_t seq_number;$/;"	m	struct:lsmtree_gc_req_t
 seq_number	LR_inter.h	/^	uint64_t seq_number;$/;"	m	struct:lsmtree_req_t
 size	bptree.h	/^	int size;$/;"	m	struct:level
-size	btree/bptree.h	/^	int size;$/;"	m	struct:level
-size	not_uses/hash.h	/^	int size;$/;"	m	struct:Hash
-size	not_uses/heap.h	/^	int size;$/;"	m	struct:Heap
-size	not_uses/stack.h	/^	int size;$/;"	m	struct:Stack
-size	queue/queue.h	/^	int size;$/;"	m	struct:Queue
 size	skiplist.h	/^	uint64_t size;$/;"	m	struct:skiplist
-size	temp/skiplist.h	/^    int size;$/;"	m	struct:skiplist
 skIterator	skiplist.h	/^typedef struct skIterator{$/;"	s
 skIterator	skiplist.h	/^} skIterator;$/;"	t	typeref:struct:skIterator
 sk_from_ths	threading.c	/^sktable *sk_from_ths(threadset* input){\/*$/;"	f
@@ -492,33 +278,23 @@ skip_data	LR_inter.h	/^	skiplist * skip_data;$/;"	m	struct:lsmtree_gc_req_t
 skiplist	LR_inter.h	/^typedef struct skiplist skiplist;$/;"	t	typeref:struct:skiplist
 skiplist	skiplist.h	/^typedef struct skiplist{$/;"	s
 skiplist	skiplist.h	/^}skiplist;$/;"	t	typeref:struct:skiplist
-skiplist	temp/skiplist.h	/^typedef struct skiplist{$/;"	s
-skiplist	temp/skiplist.h	/^}skiplist;$/;"	t	typeref:struct:skiplist
 skiplist_cut	skiplist.c	/^skiplist *skiplist_cut(skiplist *list,KEYT num){$/;"	f
 skiplist_data_read	skiplist.c	/^sktable* skiplist_data_read(sktable *list, KEYT pbn, int fd){\/*$/;"	f
 skiplist_data_write	skiplist.c	/^int skiplist_data_write(skiplist *data,int fd,lsmtree_gc_req_t * req){$/;"	f
-skiplist_delete	temp/skiplist.c	/^int skiplist_delete(skiplist *list, unsigned long key)$/;"	f
 skiplist_dump	skiplist.c	/^void skiplist_dump(skiplist *list){$/;"	f
-skiplist_dump	temp/skiplist.c	/^void skiplist_dump(skiplist *list)$/;"	f
 skiplist_ex_value_free	skiplist.c	/^void skiplist_ex_value_free(skiplist *list){$/;"	f
 skiplist_find	skiplist.c	/^snode *skiplist_find(skiplist *list, KEYT key){$/;"	f
 skiplist_find_level	skiplist.c	/^static snode * skiplist_find_level(KEYT key, int level, skiplist *list){$/;"	f	file:
 skiplist_free	skiplist.c	/^void skiplist_free(skiplist *list){$/;"	f
-skiplist_getNext	temp/skiplist.c	/^snode* skiplist_getNext(skiplist* list){$/;"	f
 skiplist_init	skiplist.c	/^skiplist *skiplist_init(skiplist *point){$/;"	f
-skiplist_init	temp/skiplist.c	/^skiplist *skiplist_init(skiplist *list)$/;"	f
 skiplist_insert	skiplist.c	/^snode *skiplist_insert(skiplist *list,KEYT key, char *value, lsmtree_req_t* req,bool flag){$/;"	f
-skiplist_insert	temp/skiplist.c	/^int skiplist_insert(skiplist *list, unsigned long key, int* value)$/;"	f
 skiplist_keyset_find	skiplist.c	/^keyset *skiplist_keyset_find(sktable *t, KEYT key){$/;"	f
 skiplist_keyset_read	skiplist.c	/^bool skiplist_keyset_read(keyset* k,char *res,int fd,lsmtree_req_t *req){$/;"	f
 skiplist_meta_free	skiplist.c	/^void skiplist_meta_free(skiplist *list){$/;"	f
 skiplist_meta_read	skiplist.c	/^sktable *skiplist_meta_read(KEYT pbn, int fd,int seq,lsmtree_req_t *req){$/;"	f
 skiplist_meta_write	skiplist.c	/^int skiplist_meta_write(skiplist *data,int fd, lsmtree_gc_req_t *req){$/;"	f
-skiplist_node_free	temp/skiplist.c	/^void skiplist_node_free(snode *x)$/;"	f
 skiplist_pop	skiplist.c	/^snode *skiplist_pop(skiplist *list){$/;"	f
-skiplist_popFront	temp/skiplist.c	/^snode skiplist_popFront(skiplist* list){$/;"	f
 skiplist_read	skiplist.c	/^sktable *skiplist_read(KEYT pbn, int hfd, int dfd){$/;"	f
-skiplist_search	temp/skiplist.c	/^snode *skiplist_search(skiplist *list, unsigned long key)$/;"	f
 skiplist_sktable_free	skiplist.c	/^void skiplist_sktable_free(sktable *f){$/;"	f
 skiplist_write	skiplist.c	/^int skiplist_write(skiplist *data, lsmtree_gc_req_t * req,int hfd,int dfd){$/;"	f
 sktable	LR_inter.h	/^typedef struct sktable sktable;$/;"	t	typeref:struct:sktable
@@ -526,41 +302,25 @@ sktable	skiplist.h	/^typedef struct sktable{$/;"	s
 sktable	skiplist.h	/^}sktable;$/;"	t	typeref:struct:sktable
 snode	skiplist.h	/^typedef struct snode{$/;"	s
 snode	skiplist.h	/^}snode;$/;"	t	typeref:struct:snode
-snode	temp/skiplist.h	/^typedef struct snode{$/;"	s
-snode	temp/skiplist.h	/^} snode;$/;"	t	typeref:struct:snode
 snode_init	skiplist.c	/^snode *snode_init(snode *node){$/;"	f
 sst_lock	lsmtree.c	/^pthread_mutex_t sst_lock;$/;"	v
 sstable	lsmtree.h	/^	skiplist *sstable;$/;"	m	struct:lsmtree
-sstable_get_count	not_uses/lsm_main_org.c	/^int sstable_get_count;$/;"	v
 sstcheck	lsmtree_org.c	/^int sstcheck;$/;"	v
-stack_free	not_uses/stack.c	/^void stack_free(Stack *q){$/;"	f
-stack_init	not_uses/stack.c	/^Stack* stack_init(Stack* q, int size){$/;"	f
-start	btree/bptree.h	/^	Node *start,*end,*now;$/;"	m	struct:bpIterator
 start	measure.h	/^	struct timeval start,end;$/;"	m	struct:linktime	typeref:struct:linktime::timeval
-start	not_uses/hash.h	/^	int start;$/;"	m	struct:Hash
 start	skiplist.h	/^	KEYT start,end;$/;"	m	struct:skiplist
-start	temp/skiplist.h	/^	unsigned long  start,end;$/;"	m	struct:skiplist
-start_t	simple/test.cpp	/^struct timeval start_t,end_t;$/;"	v	typeref:struct:timeval
-start_time	simple/time_.cpp	/^void start_time(struct timeval *time_) {$/;"	f
 std	makefile	/^	gcc -g -o bloomfilter.o bloomfilter.* -D DEBUG -std=c99$/;"	m
 std	makefile	/^	gcc -g -o exefile\/rand.o rand.c -std=c99$/;"	m
 std	makefile	/^	gcc -g -o exefile\/test.o test.c -Wall -std=c99$/;"	m
 table	lsmtree.h	/^typedef struct table{$/;"	s
 table	lsmtree.h	/^}table;$/;"	t	typeref:struct:table
-table	not_uses/hash.h	/^	hnode table[KEYN*TABLEFACTOR];$/;"	m	struct:Hash
-tail	temp/skiplist.h	/^	struct snode *tail;$/;"	m	struct:skiplist	typeref:struct:skiplist::snode
 target_number	LR_inter.h	/^	uint64_t target_number;$/;"	m	struct:lsmtree_gc_req_t
 target_number	LR_inter.h	/^	uint64_t target_number;$/;"	m	struct:lsmtree_req_t
-temp	not_uses/bloomfilter.c	/^bool temp[INPUTSIZE+1];$/;"	v
 terminate	threading.h	/^	pthread_mutex_t terminate;$/;"	m	struct:threading
 terminateflag	threading.h	/^	bool terminateflag;$/;"	m	struct:threading
-th_cnt	not_uses/lsm_main_org.c	/^pthread_mutex_t th_cnt;$/;"	v
 th_cnt_lock	threading.h	/^	pthread_mutex_t th_cnt_lock;$/;"	m	struct:threadset
-thread_cnt	not_uses/lsm_main_org.c	/^int thread_cnt;$/;"	v
 thread_gc_main	threading.c	/^void* thread_gc_main(void *input){$/;"	f
 thread_get	lsmtree.c	/^int thread_get(lsmtree *LSM, KEYT key, threading *input, char *ret,lsmtree_req_t* req){$/;"	f
 thread_header_read	lsmtree_org.c	/^void *thread_header_read(void *input){$/;"	f
-thread_main	not_uses/lsm_main_org.c	/^void *thread_main(void* input){$/;"	f
 thread_main	threading.c	/^void* thread_main(void *input){$/;"	f
 threading	lsmtree.h	/^typedef struct threading threading;$/;"	t	typeref:struct:threading
 threading	threading.h	/^typedef struct threading{$/;"	s
@@ -579,16 +339,12 @@ threadset_init	threading.c	/^void threadset_init(threadset* input){$/;"	f
 threadset_request_wait	threading.c	/^void threadset_request_wait(threadset *input){$/;"	f
 threadset_start	threading.c	/^void threadset_start(threadset* input){$/;"	f
 tlb	lsmtree.h	/^	table tlb;$/;"	m	struct:lsmtree
-total	simple/test.cpp	/^double total=0;$/;"	v
-true	btree/bptree.h	/^typedef enum{false,true} bool;$/;"	e	enum:__anon1
-true	utils.h	/^typedef enum{false,true} bool;$/;"	e	enum:__anon4
-type	LR_inter.h	/^	int type;$/;"	m	struct:__anon5
-value	LR_inter.h	/^	char *value;$/;"	m	struct:__anon5
-value	not_uses/hash.h	/^	char *value;$/;"	m	struct:Hash
+true	utils.h	/^typedef enum{false,true} bool;$/;"	e	enum:__anon2
+type	LR_inter.h	/^	int type;$/;"	m	struct:__anon1
+value	LR_inter.h	/^	char *value;$/;"	m	struct:__anon1
 value	queue.h	/^	void *value;$/;"	m	struct:_node
 value	skiplist.h	/^	char *value;$/;"	m	struct:sktable
 value	skiplist.h	/^	char *value;$/;"	m	struct:snode
-value	temp/skiplist.h	/^    int value[1000];$/;"	m	struct:snode
 version	bptree.h	/^	KEYT version;$/;"	m	struct:Entry
 version	bptree.h	/^	KEYT version;$/;"	m	struct:level
 where_am_i	lsmtree_org.c	/^int where_am_i;$/;"	v

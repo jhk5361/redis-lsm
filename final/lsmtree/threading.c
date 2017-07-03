@@ -2,6 +2,7 @@
 #include"LR_inter.h"
 #include"skiplist.h"
 #include"lsmtree.h"
+#include"measure.h"
 #include<stdlib.h>
 #include<stdio.h>
 #include<string.h>
@@ -10,6 +11,7 @@
 #include<errno.h>
 #define __STDC_FORMAT_MACROS
 extern pthread_mutex_t dfd_lock;
+extern MeasureTime mt;
 void threading_init(threading *input){
 	pthread_mutex_init(&input->activated_check,NULL);
 	pthread_mutex_init(&input->terminate,NULL);
@@ -80,11 +82,10 @@ void* thread_gc_main(void *input){
 		
 		pthread_mutex_lock(&myth->activated_check);
 		myth->isactivated=true;
-		printf(" %d : activated!\n",number);
 		pthread_mutex_unlock(&myth->activated_check);
-		
+		//printf("activated : %d\n",number);
 		pthread_mutex_unlock(&master->gc_lock);
-
+	
 		pthread_mutex_lock(&myth->terminate);
 		if(myth->terminateflag){
 			pthread_mutex_unlock(&myth->terminate);
@@ -106,15 +107,20 @@ void* thread_gc_main(void *input){
 					lsm_req->now_number=0;
 					lsm_req->target_number=0;
 					pthread_mutex_init(&lsm_req->meta_lock,NULL);
+					MS(&mt);
 					compaction(LSM,src,des,NULL,lsm_req);
+					ME(&mt,"compaction");
 					break;
 				case LR_FLUSH_T:
 					data=(skiplist*)lsm_req->params[2];
 					lsm_req->now_number=0;
 					lsm_req->target_number=KEYN+2;
+					lsm_req->skip_data=data;
 					pthread_mutex_init(&lsm_req->meta_lock,NULL);
 					result_entry=make_entry(data->start,data->end,write_data(LSM,data,lsm_req));
+					MS(&mt);
 					compaction(LSM,NULL,LSM->buf.disk[0],result_entry,lsm_req);
+					ME(&mt,"compaction");
 					LSM->sstable=NULL;
 					break;
 				default:
@@ -122,9 +128,9 @@ void* thread_gc_main(void *input){
 			}
 			lsm_req->end_req(lsm_req);
 
+			//printf("activated : %d\n",number++);
 			pthread_mutex_lock(&myth->activated_check);
 			myth->isactivated=false;
-			printf(" %d : deactivated!\n",number++);
 			pthread_mutex_unlock(&myth->activated_check);
 		}
 	}
@@ -157,7 +163,6 @@ void* thread_main(void *input){
 		pthread_mutex_lock(&myth->activated_check);
 		myth->isactivated=true;
 		pthread_mutex_unlock(&myth->activated_check);
-
 		pthread_mutex_unlock(&master->req_lock);
 		
 		pthread_mutex_lock(&myth->terminate);
@@ -173,12 +178,14 @@ void* thread_main(void *input){
 			lsmtree *LSM=(lsmtree*)lsm_req->params[3];
 			switch((*type)){
 				case LR_READ_T:
+					MS(&mt);
 					value=(char*)lsm_req->params[2];
 					pthread_mutex_init(&lsm_req->meta_lock,NULL);
 					if(!thread_get(LSM,*key,myth,value,lsm_req)){
 						printf("%lu error\n",*key);
 						sleep(10);
 					}
+					ME(&mt,"get");
 					lsm_req->end_req(lsm_req);
 					break;
 				case LR_WRITE_T:
