@@ -272,8 +272,8 @@ int GetRequest(int fd, char *str, int len, req_t *req, unsigned int *start, unsi
 				new_req->mutx = mutx;
 				*end = (*end + 1) % 0xffffffff;
 			}
-			EnqueReq(new_req, seq);
-			//make_req(req);
+			//EnqueReq(new_req, seq);
+			make_req(req);
 			new_req = NULL;
 			continue;
 		}
@@ -287,9 +287,9 @@ int GetRequest(int fd, char *str, int len, req_t *req, unsigned int *start, unsi
 			if ( (cur = GetValue(str, len, cur, new_req)) == -1 ) return -1;
 
 //printf("8\n"); 
-		EnqueReq(new_req, seq);
+		//EnqueReq(new_req, seq);
+		make_req(req);
 		new_req = NULL;
-		//make_req(req);
 	}
 	return 0;
 }
