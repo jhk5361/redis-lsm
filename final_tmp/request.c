@@ -46,7 +46,7 @@ req_t* DequeReq() {
 
 #ifdef ENABLE_LIBFTL
 void alloc_dma(req_t *req) {
-	req->dmaTag = memio_alloc_dma(req->type_info->type, req->value_info->value);
+	req->dmaTag = memio_alloc_dma(req->type_info->type, (&req->value_info->value));
 	return;
 }
 #endif
@@ -55,7 +55,7 @@ void alloc_dma(req_t *req) {
 void free_dma(req_t *req) {
 	//memio_free_dma(req->type_info->type, req->value_info->value);
 	memio_free_dma(req->type_info->type, req->dmaTag);
-	return 0;
+	return;
 }
 #endif
 
@@ -174,6 +174,7 @@ int make_req(req_t *req) {
 
 //#ifdef ENABLE_LIBFTL
 int end_req(req_t *req) {
+	printf("end_req\n");
 	if ( req->type_info->type == 2 ) {
 		/*
 		unsigned int *_cur = req->cur;

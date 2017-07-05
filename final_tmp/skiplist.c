@@ -190,7 +190,7 @@ sktable *skiplist_meta_read(KEYT pbn, int fd,int seq,lsmtree_req_t *req){
 #ifndef ENABLE_LIBFTL
 	temp->keys=(keyset*)malloc(PAGESIZE);
 #else
-	temp->dmatag=memio_alloc_dma(5,&(char*)temp->keys);
+	temp->dmatag=memio_alloc_dma(5,(char**)&temp->keys);
 #endif
     temp->seq_number=seq;
 	temp->end_req=req->end_req;
@@ -207,7 +207,7 @@ sktable *skiplist_meta_read(KEYT pbn, int fd,int seq,lsmtree_req_t *req){
 	pthread_mutex_unlock(&dfd_lock);
 	temp->end_req(temp);
 #else
-	memio_comp_read(mio,pbn,(uint64_t)(PAGESIZE),(uint8_t)temp->keys,1,temp,temp->dmatag);
+	memio_comp_read(mio,pbn,(uint64_t)(PAGESIZE),(uint8_t*)temp->keys,1,temp,temp->dmatag);
 #endif
 	return NULL;
 }
@@ -271,7 +271,7 @@ bool skiplist_keyset_read(keyset* k,char *res,int fd,lsmtree_req_t *req){
 	pthread_mutex_unlock(&dfd_lock);
 	temp->end_req(temp);
 #else
-	memio_read(mio,k->ppa,(uint64_t)(PAGESIZE),(uint8_t)res,1,temp,temp->req->dmaTag);
+	memio_read(mio,k->ppa,(uint64_t)(PAGESIZE),(uint8_t*)res,1,temp,temp->req->dmaTag);
 #endif
 	return 1;
 }
@@ -311,7 +311,7 @@ KEYT skiplist_meta_write(skiplist *data,int fd, lsmtree_gc_req_t *req){
 		pthread_mutex_unlock(&dfd_lock);
 		temp_req->end_req(temp_req);
 #else
-		memio_comp_write(mio,ppa++,(uint64_t)(PAGESIZE),(uint8_t)temp_req->keys,1,(lsmtree_req_t*)temp_req,temp_req->dmatag);
+		memio_comp_write(mio,ppa++,(uint64_t)(PAGESIZE),(uint8_t*)temp_req->keys,1,(lsmtree_req_t*)temp_req,temp_req->dmatag);
 #endif
 	}
 
@@ -337,7 +337,7 @@ KEYT skiplist_data_write(skiplist *data,int fd,lsmtree_gc_req_t * req){
 		pthread_mutex_unlock(&dfd_lock);
 		child_req->end_req(child_req);
 #else
-		memio_write(mio,ppa,(uint64_t)(PAGESIZE),(uint8_t)temp->value,1,child_req,child_req->req->dmaTag);
+		memio_write(mio,ppa,(uint64_t)(PAGESIZE),(uint8_t*)temp->value,1,child_req,child_req->req->dmaTag);
 #endif
 		temp=temp->list[1];
 		ppa++;

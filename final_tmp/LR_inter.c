@@ -5,6 +5,9 @@
 #include<stdlib.h>
 #include<string.h>
 #include<stdio.h>
+#ifdef ENABLE_LIBFTL
+#include "libmemio.h"
+#endif
 lsmtree *LSM;
 threadset processor;
 MeasureTime mt;
