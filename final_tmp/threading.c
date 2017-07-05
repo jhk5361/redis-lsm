@@ -4,14 +4,17 @@
 #include"lsmtree.h"
 #include"measure.h"
 #include<stdlib.h>
+#include<limits.h>
 #include<stdio.h>
 #include<string.h>
 #include<inttypes.h>
 #include<signal.h>
 #include<errno.h>
 #define __STDC_FORMAT_MACROS
+extern threadset processor;
 extern pthread_mutex_t dfd_lock;
 extern MeasureTime mt;
+
 void threading_init(threading *input){
 	pthread_mutex_init(&input->activated_check,NULL);
 	pthread_mutex_init(&input->terminate,NULL);
@@ -116,6 +119,7 @@ void* thread_gc_main(void *input){
 					lsm_req->skip_data=data;
 					pthread_mutex_init(&lsm_req->meta_lock,NULL);
 					result_entry=make_entry(data->start,data->end,write_data(LSM,data,lsm_req));
+					
 					compaction(LSM,NULL,LSM->buf.disk[0],result_entry,lsm_req);
 					LSM->sstable=NULL;
 					break;
@@ -124,7 +128,7 @@ void* thread_gc_main(void *input){
 			}
 			lsm_req->end_req(lsm_req);
 
-			//printf("activated : %d\n",number++);
+			//printf("deactivated : %d\n",number++);
 			pthread_mutex_lock(&myth->activated_check);
 			myth->isactivated=false;
 			pthread_mutex_unlock(&myth->activated_check);
@@ -172,13 +176,20 @@ void* thread_main(void *input){
 			KEYT *key=(KEYT*)lsm_req->params[1];
 			char *value;		
 			lsmtree *LSM=(lsmtree*)lsm_req->params[3];
+			int test_num=lr_is_gc_needed();	
+			if(test_num!=-1){
+				lr_gc_make_req(test_num);
+			}
+			
+			threadset_gc_wait(&processor);
+			uint64_t nullvalue=0;
+			struct timeval ret,start,end;
 			switch((*type)){
 				case LR_READ_T:
-					value=(char*)lsm_req->params[2];
+					value=(char*)lsm_req->params[2];				
 					pthread_mutex_init(&lsm_req->meta_lock,NULL);
 					if(!thread_get(LSM,*key,myth,value,lsm_req)){
-						printf("%lu error\n",*key);
-						sleep(10);
+
 					}
 					lsm_req->end_req(lsm_req);
 					break;

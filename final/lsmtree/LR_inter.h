@@ -3,6 +3,7 @@
 
 #include<stdint.h>
 #include<pthread.h>
+#include"request.h"
 #include"skiplist.h"
 #include"utils.h"
 /**request type***/
@@ -18,11 +19,7 @@
 typedef struct sktable sktable;
 typedef struct skiplist skiplist;
 typedef struct keyset keyset;
-typedef struct {
-	int type;
-	KEYT key;
-	char *value;
-}req_t;
+typedef struct req_t req_t;
 typedef struct lsmtree_gc_req_t{
 	req_t *req;//always NULL
 	void *params[4];

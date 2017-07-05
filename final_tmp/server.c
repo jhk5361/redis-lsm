@@ -54,8 +54,8 @@ int execute_server(int serv_sock) {
 	struct sockaddr_in clnt_adr;
 	socklen_t clnt_adr_sz;
 	pthread_t t_id;
-	pthread_create(&t_id, NULL, proc_req, NULL);
-	pthread_detach(t_id);
+	//pthread_create(&t_id, NULL, proc_req, NULL);
+	//pthread_detach(t_id);
 	while(1) {
 		int *clnt_sock = (int*)malloc(sizeof(int));
 		clnt_adr_sz = sizeof(clnt_adr);
@@ -95,7 +95,6 @@ void* work_on_accept(void *arg) {
 			
 		}
 		//write(clnt_sock, "+OK\r\n", 5);
-		printf("!!!read!!!\n%d\n%d\n%s",clnt_sock,str_len,msg);
 		/*
 		if( (exit_val = ParseAndInsertCommand(clnt_sock, msg, str_len, seq)) != -2 ) {
 			printf("parse failed %d\n", exit_val);

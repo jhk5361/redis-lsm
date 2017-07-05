@@ -15,7 +15,7 @@
 #define LEVELN 5
 #define INPUTSIZE (1024 * 512)
 #define BUSYPOINT 0.7
-#define THREADQN 1024
+#define THREADQN 1
 #define THREADNUM 1
 #define THREAD //-do thread
 //#define DEBUG_THREAD 

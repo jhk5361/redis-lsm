@@ -7,13 +7,15 @@
 #include<stdio.h>
 lsmtree *LSM;
 threadset processor;
+MeasureTime mt;
 extern pthread_mutex_t sst_lock;
 extern pthread_mutex_t mem_lock;
 int8_t lr_inter_init(){
 	LSM=(lsmtree*)malloc(sizeof(lsmtree));
 	threadset_init(&processor);
 	threadset_start(&processor);
-
+	
+	measure_init(&mt);
 	if(init_lsm(LSM)!=NULL)
 		return 0;
 	return -1;
@@ -42,6 +44,7 @@ int8_t lr_gc_make_req(int8_t t_num){
 				LSM->memtree=(skiplist*)malloc(sizeof(skiplist));
 				LSM->memtree=skiplist_init(LSM->memtree);
 				pthread_mutex_unlock(&mem_lock);
+
 				pthread_mutex_unlock(&sst_lock);
 				gc_req=(lsmtree_gc_req_t*)malloc(sizeof(lsmtree_gc_req_t));
 				gc_req->params[0]=(void*)type;
@@ -72,21 +75,9 @@ int8_t lr_make_req(req_t *r){
 	switch(r->type_info->type){
 		case 3:
 		case 1://set
-			while(1){
-				threadset_gc_wait(&processor);
-				switch((test_num=lr_is_gc_needed())){
-					case -1:
-						*type=LR_WRITE_T;
-						break;
-					default:
-						lr_gc_make_req(test_num);
-						continue;
-				}
-				break;
-			}
+			*type=LR_WRITE_T;
 			break;
 		case 2://get
-			threadset_gc_wait(&processor);
 			*type=LR_READ_T;
 			break;
 		default:

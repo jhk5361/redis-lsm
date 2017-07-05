@@ -30,12 +30,12 @@ snode *snode_init(snode *node){
 
 skiplist *skiplist_init(skiplist *point){
 	point->level=1;
-	point->start=INT_MAX;
+	point->start=-1;
 	point->end=point->size=0;
 	point->header=(snode*)malloc(sizeof(snode));
 	point->header->list=(snode**)malloc(sizeof(snode)*(MAX_L+1));
 	for(int i=0; i<MAX_L; i++) point->header->list[i]=point->header;
-	point->header->key=INT_MAX;
+	point->header->key=-1;
 	return point;
 }
 snode *skiplist_pop(skiplist *list){
@@ -199,8 +199,10 @@ sktable *skiplist_meta_read(KEYT pbn, int fd,int seq,lsmtree_req_t *req){
 #ifndef ENABLE_LIBFTL
 	pthread_mutex_lock(&dfd_lock);
 	int number=0;
-	if((number=lseek64(fd,((off64_t)PAGESIZE)*(pbn),SEEK_SET))==-1)
+	if((number=lseek64(fd,((off64_t)PAGESIZE)*(pbn),SEEK_SET))==-1){
 		printf("lseek error in meta read!\n");
+		sleep(10);
+	}
 	read(fd,temp->keys,PAGESIZE);
 	pthread_mutex_unlock(&dfd_lock);
 	temp->end_req(temp);
@@ -273,12 +275,12 @@ bool skiplist_keyset_read(keyset* k,char *res,int fd,lsmtree_req_t *req){
 #endif
 	return 1;
 }
-int skiplist_write(skiplist *data, lsmtree_gc_req_t * req,int hfd,int dfd){
+KEYT skiplist_write(skiplist *data, lsmtree_gc_req_t * req,int hfd,int dfd){
 	skiplist_data_write(data,dfd,req);
 	skiplist_meta_write(data,hfd,req);
 	return 0;
 }
-int skiplist_meta_write(skiplist *data,int fd, lsmtree_gc_req_t *req){
+KEYT skiplist_meta_write(skiplist *data,int fd, lsmtree_gc_req_t *req){
 	lsmtree_gc_req_t *temp_req;
 	uint8_t *type;
 	int now=0;
@@ -315,7 +317,7 @@ int skiplist_meta_write(skiplist *data,int fd, lsmtree_gc_req_t *req){
 
 	return ppa-2;
 }
-int skiplist_data_write(skiplist *data,int fd,lsmtree_gc_req_t * req){
+KEYT skiplist_data_write(skiplist *data,int fd,lsmtree_gc_req_t * req){
 	KEYT where=ppa;
 	lsmtree_req_t *child_req;
 	snode *temp=data->header->list[1];
@@ -348,7 +350,7 @@ skiplist *skiplist_cut(skiplist *list,KEYT num){
 	skiplist *res=(skiplist*)malloc(sizeof(skiplist));
 	res=skiplist_init(res);
 	snode *h=res->header;
-	res->start=INT_MAX;
+	res->start=-1;
 	for(KEYT i=0; i<num; i++){
 		snode *temp=skiplist_pop(list);
 		if(temp==NULL) return NULL;

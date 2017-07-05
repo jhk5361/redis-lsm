@@ -16,7 +16,7 @@
 #include<fcntl.h>
 #include<semaphore.h>
 #include<sys/time.h>
-
+#include<limits.h>
 #ifdef ENABLE_LIBFTL
 #include "libmemio.h"
 memio_t* mio;
@@ -62,7 +62,7 @@ void level_write_unlocking(int level){
 	pthread_mutex_unlock(&level_write_lock[level]);
 }
 
-int write_data(lsmtree *LSM,skiplist *data,lsmtree_gc_req_t* req){
+KEYT write_data(lsmtree *LSM,skiplist *data,lsmtree_gc_req_t* req){
 	skiplist_data_write(data,LSM->dfd,req);
 	return skiplist_meta_write(data,LSM->dfd,req);
 }
@@ -167,33 +167,21 @@ int thread_get(lsmtree *LSM, KEYT key, threading *input, char *ret,lsmtree_req_t
 
 	snode* res=skiplist_find(LSM->memtree,key);
 	if(res!=NULL){
-		req->res=NULL;
-		memcpy(ret,&res->key,sizeof(res->key));
+		memcpy(ret,res->value,PAGESIZE);
 		return 1;
 	}
 
-	pthread_mutex_lock(&sst_lock);
 	res=NULL;
 	res=skiplist_find(LSM->sstable,key);
 	if(res!=NULL){
-		memcpy(ret,&res->key,sizeof(res->key));
-		req->res=NULL;
-		pthread_mutex_unlock(&sst_lock);
+		memcpy(ret,res->value,PAGESIZE);
 		return 1;
 	}
-	pthread_mutex_unlock(&sst_lock);
 
 	res=NULL;
 	res=skiplist_find(LSM->buf.lastB,key);
 	if(res!=NULL){
-		keyset read_temp;
-		read_temp.key=res->key;
-		read_temp.ppa=res->ppa;
-		req->res=NULL;
-		req->now_number=0;
-		req->target_number=1;
-		skiplist_keyset_read(&read_temp,ret,LSM->dfd,req);
-		lr_req_wait(req);
+		memcpy(ret,res->value,PAGESIZE);
 		return 1;
 	}
 	if(input->buf_data!=NULL){
@@ -234,7 +222,6 @@ int thread_get(lsmtree *LSM, KEYT key, threading *input, char *ret,lsmtree_req_t
 			break;
 	}
 	return 0;
-
 }
 
 int get(lsmtree *LSM,KEYT key,char *ret){/*
@@ -292,11 +279,14 @@ bool compaction(lsmtree *LSM,level *src, level *des,Entry *ent,lsmtree_gc_req_t 
 	}
 	else{
 		target=level_get_victim(src);
+		if(target->pbn>INT_MAX){
+			printf("compaction_target\n");
+			sleep(10);
+		}
 		Entry *target2=level_entry_copy(target);
 		level_delete(src,target->key);
 		target=target2;
 	}
-
 	skiplist *last=LSM->buf.lastB;
 	if(last==NULL){
 		last=(skiplist*)malloc(sizeof(skiplist));
@@ -362,7 +352,12 @@ bool compaction(lsmtree *LSM,level *src, level *des,Entry *ent,lsmtree_gc_req_t 
 		req->now_number=0;
 		req->target_number=allnumber*2;
 		while((t=skiplist_cut(last,KEYN))){
-			Entry* temp_e=make_entry(t->start, t->end,write_meta_only(LSM,t,req));
+			Entry* temp_e=make_entry(t->start, t->end, write_meta_only(LSM,t,req));
+			if(temp_e->pbn>INT_MAX){
+				printf("compaction wirte!\n");
+				sleep(10);
+			}
+
 			level_insert(des,temp_e);
 			if(temp_e->key==0)
 				sleep(10);
@@ -425,10 +420,13 @@ bool is_compt_needed(lsmtree *input, KEYT level){
 	return true;
 }
 bool is_flush_needed(lsmtree *input){
+	pthread_mutex_lock(&mem_lock);
 	if(input->memtree->size<KEYN){
+		pthread_mutex_unlock(&mem_lock);
 		return false;
 	}
 	else{
+		pthread_mutex_unlock(&mem_lock);
 		return true;
 	}
 }

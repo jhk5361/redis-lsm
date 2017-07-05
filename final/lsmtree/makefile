@@ -1,10 +1,10 @@
 All: archive
 lsm : lsm_n lsm_p
 
-TOP_DIR=./
+TOP_DIR=../
 
-LR: lsm_main.c lsmtree.c bptree.c utils.c measure.c skiplist.c threading.c LR_inter.c queue.c
-	gcc -g -o exefile/LR $^ -std=c99 -I$(TOP_DIR)/src -I$(TOP_DIR)/lsmtree -D_FILE_OFFSET_BITS=64 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_BSD_SOURCE -lpthread
+LR: lsm_main.c lsmtree.c bptree.c utils.c measure.c skiplist.c threading.c LR_inter.c queue.c ../request.c
+	g++ -g -o exefile/LR $^ -I$(TOP_DIR)src -I$(TOP_DIR)lsmtree -D_FILE_OFFSET_BITS=64 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_BSD_SOURCE -DNOHOST -lpthread
 
 
 PLR: lsm_main.c lsmtree.c bptree.c utils.c measure.c skiplist.c threading.c LR_inter.c queue.c

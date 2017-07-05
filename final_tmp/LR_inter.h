@@ -29,7 +29,7 @@ typedef struct lsmtree_gc_req_t{
 	uint64_t seq_number;
 	pthread_mutex_t meta_lock;
 	sktable *res;
-    	keyset *keys;
+    keyset *keys;
 	struct lsmtree_gc_req_t *parent;
 	int dmatag;
 

@@ -7,7 +7,7 @@ Node* binary_search_node(Node *node, KEYT key){
 	int start=0,end=node->count-2;
 	while(1){
 		int mid=(start+end)/2;
-		if(mid==0 && node->separator[mid] > key)
+		if(mid==0 && node->separator[mid] >= key)
 			return node->children[mid].node;
 		else if(node->separator[mid] <= key && node->separator[mid+1]>key)
 			return node->children[mid+1].node;

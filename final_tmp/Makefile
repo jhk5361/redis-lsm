@@ -7,7 +7,6 @@ CXXFLAGS += \
 	-g \
 	-std=c++11 \
 	-D NOHOST \
-	-D NPRINTOPTION \
 	 
 CFLAGS += $(CXXFLAGS)
 

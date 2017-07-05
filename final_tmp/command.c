@@ -228,7 +228,6 @@ int GetRequest(int fd, char *str, int len, req_t *req, unsigned int *start, unsi
 	req_t* new_req = req;
 	//printf("cur %d, req %p\n", cur, req);
 	while ( cur < len ) {
-		printf("cur : %d\n", cur);
 		if ( new_req == NULL ) {
 			new_req = alloc_req(new_req);
 			new_req->fd = fd;
@@ -256,7 +255,7 @@ int GetRequest(int fd, char *str, int len, req_t *req, unsigned int *start, unsi
 			if ( (cur = GetKey(str, len, cur, new_req)) == -1 ) return -1;
 
 //printf("5\n"); 
-
+		new_req->key_info->key++;
 		#ifdef MEMIO
 		if ( new_req->type_info->type < 3 ) {
 			alloc_dma(new_req);
@@ -273,7 +272,7 @@ int GetRequest(int fd, char *str, int len, req_t *req, unsigned int *start, unsi
 				*end = (*end + 1) % 0xffffffff;
 			}
 			//EnqueReq(new_req, seq);
-			make_req(req);
+			make_req(new_req);
 			new_req = NULL;
 			continue;
 		}
@@ -288,7 +287,7 @@ int GetRequest(int fd, char *str, int len, req_t *req, unsigned int *start, unsi
 
 //printf("8\n"); 
 		//EnqueReq(new_req, seq);
-		make_req(req);
+		make_req(new_req);
 		new_req = NULL;
 	}
 	return 0;

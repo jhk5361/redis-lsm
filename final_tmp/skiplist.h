@@ -19,7 +19,6 @@ typedef struct skiplist{
 	uint8_t level;
 	KEYT start,end;
 	uint64_t size;
-	KEYT hppa;
 	snode *header;
 }skiplist;
 
@@ -51,9 +50,9 @@ bool skiplist_keyset_read(keyset* ,char *,int fd,lsmtree_req_t *);
 void skiplist_sktable_free(sktable *);
 
 snode *skiplist_pop(skiplist *);
-int skiplist_write(skiplist*,lsmtree_gc_req_t *,int hfd, int dfd);
-int skiplist_meta_write(skiplist *, int fd,struct lsmtree_gc_req_t*);
-int skiplist_data_write(skiplist *, int fd,struct lsmtree_gc_req_t*);
+KEYT skiplist_write(skiplist*,lsmtree_gc_req_t *,int hfd, int dfd);
+KEYT skiplist_meta_write(skiplist *, int fd,struct lsmtree_gc_req_t*);
+KEYT skiplist_data_write(skiplist *, int fd,struct lsmtree_gc_req_t*);
 skiplist* skiplist_cut(skiplist *,KEYT num);
 void skiplist_ex_value_free(skiplist *list);
 void skiplist_meta_free(skiplist *list);

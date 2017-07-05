@@ -30,6 +30,8 @@ Entry *make_entry(KEYT key,KEYT end,KEYT pbn1){
 	res->key=key;
 	res->end=end;
 	res->pbn=pbn1;
+	if(pbn1>INT_MAX)
+		sleep(10);
 	res->version=0;
 	res->parent=NULL;
 	return res;
@@ -112,10 +114,10 @@ Entry **level_range_find(level *lev, KEYT start, KEYT end){
 			cnt=1;
 		}
 	}/*
-	if(idx==0){
+		if(idx==0){
 		free(res);
 		return NULL;
-	}*/
+		}*/
 	res[idx]=NULL;
 	return res;
 }
@@ -123,7 +125,7 @@ Entry **level_range_find(level *lev, KEYT start, KEYT end){
 Entry *level_get_victim(level *lev){
 	Entry *temp=level_getFirst(lev);
 	Entry *res;
-	KEYT min=INT_MAX;
+	KEYT min=-1;
 	int cnt=0;
 	while(temp!=NULL){
 		if(temp->key <min){
@@ -212,6 +214,9 @@ Node *level_directory_insert(level *lev,Node *target, KEYT sep, Node *prev, Node
 
 Node *level_insert(level* lev, Entry *entry){
 	Node *temp=level_find_leafnode(lev,entry->key);
+	if(entry->pbn>INT_MAX){
+		printf("??");
+	}
 	if(lev->size+1>lev->m_size) return NULL;
 	if(entry->version==0) entry->version=lev->version++;
 	if(temp->count==0){

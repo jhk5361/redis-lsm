@@ -4,6 +4,8 @@
 #include <inttypes.h>
 #include <stdlib.h>
 #include <string.h>
+#include "utils.h"
+#include "measure.h"
 #include "queue.h"
 #include "priority_queue.h"
 #include "request.h"
@@ -14,13 +16,16 @@
 #include "libmemio.h"
 #endif
 
+extern MeasureTime mt;
 pthread_mutex_t queue_mutx = PTHREAD_MUTEX_INITIALIZER;
 extern queue *req_queue;
+
 
 req_t *reqs[1000] = {0,};
 int start = 0, end = 0;
 
 int end_req(req_t*);
+struct timeval ms,me,re;
 
 void EnqueReq(req_t *req, uint64_t seq) {
 //	req->key |= seq << 32; // make unique key
@@ -142,6 +147,19 @@ void* proc_req(void *arg) {
 
 //#ifdef ENABLE_LIBFTL
 int make_req(req_t *req) {
+	static int r=0;
+	static bool flag=false;
+	if(req->type_info->type==2){
+		if(flag==false){
+			gettimeofday(&ms,NULL);
+			flag=true;
+		}
+		else{
+			gettimeofday(&me,NULL);
+			timersub(&me,&ms,&re);
+			gettimeofday(&ms,NULL);
+		}
+	}
 	if ( lr_make_req(req) == -1 ) {
 		SendBulkValue(req->fd, NULL, -1);
 		printf("make req failed!\n");
@@ -157,6 +175,7 @@ int make_req(req_t *req) {
 //#ifdef ENABLE_LIBFTL
 int end_req(req_t *req) {
 	if ( req->type_info->type == 2 ) {
+		/*
 		unsigned int *_cur = req->cur;
 		if ( req->seq == *_cur ) {
 			node_t *n;
@@ -180,6 +199,11 @@ int end_req(req_t *req) {
 		}
 	}
 	else {
+		free_req(req);
+		*/
+		SendBulkValue(req->fd, req->value_info->value, req->value_info->len);
+			
+	//		SendBulkValue(req->fd, NULL, -1);
 		free_req(req);
 	}
 	return 0;
