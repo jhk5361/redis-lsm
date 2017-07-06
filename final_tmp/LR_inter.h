@@ -5,7 +5,9 @@
 #include<pthread.h>
 #include"skiplist.h"
 #include"utils.h"
+#ifndef LIBLSM
 #include"request.h"
+#endif
 /**request type***/
 #define LR_READ_T 	32
 #define LR_WRITE_T 	8
@@ -19,7 +21,16 @@
 typedef struct sktable sktable;
 typedef struct skiplist skiplist;
 typedef struct keyset keyset;
-typedef struct req_t req_t;
+#ifdef LIBLSM
+typedef struct req_t{
+	int dmaTag;
+	char *value;
+	uint64_t key;
+	uint8_t type;
+}req_t;
+#else
+	typedef struct req_t req_t;
+#endif
 typedef struct lsmtree_gc_req_t{
 	req_t *req;//always NULL
 	void *params[4];
@@ -29,10 +40,10 @@ typedef struct lsmtree_gc_req_t{
 	uint64_t seq_number;
 	pthread_mutex_t meta_lock;
 	sktable *res;
-    keyset *keys;
+ 	keyset *keys;
 	struct lsmtree_gc_req_t *parent;
 	int dmatag;
-
+	
 	sktable *compt_headers;
 	skiplist * skip_data;
 }lsmtree_gc_req_t;
@@ -50,7 +61,8 @@ typedef struct lsmtree_req_t{
 	struct lsmtree_req_t *parent;
 	int dmatag;
 
-	char *padding[2];
+	struct lsmtree_gc_req_t *gc_parent;
+	char *dummy;
 }lsmtree_req_t;
 
 int8_t lr_make_req(req_t *);

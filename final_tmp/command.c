@@ -226,7 +226,7 @@ int GetRequest(int fd, char *str, int len, req_t *req, unsigned int *start, unsi
 	int cur = 0, result = 0;
 	uint64_t seq = 0;
 	req_t* new_req = req;
-	//printf("cur %d, req %p\n", cur, req);
+//	printf("cur %d, req %p\n", cur, req);
 	while ( cur < len ) {
 		if ( new_req == NULL ) {
 			new_req = alloc_req(new_req);
@@ -238,11 +238,11 @@ int GetRequest(int fd, char *str, int len, req_t *req, unsigned int *start, unsi
 
 		if ( !new_req->keyword_info->valid )
 			if ( (cur = GetLength(str, '*', len, cur, new_req, 1)) == -1 ) return -1;
-//printf("1 %d\n",req->keyword_info->keywordNum); 
+//printf("1 %d\n",new_req->keyword_info->keywordNum); 
 		if ( !new_req->type_info->valid ) 
 			if ( (cur = GetLength(str, '$', len, cur, new_req, 2)) == -1 ) return -1;
 
-//printf("2 %d\n",req->type_info->len); 
+//printf("2 %d\n",new_req->type_info->len); 
 		if ( new_req->type_info->valid == 1 )
 			if ( (cur = GetType(str, len, cur, new_req)) == -1 ) return -1;
 
@@ -250,13 +250,13 @@ int GetRequest(int fd, char *str, int len, req_t *req, unsigned int *start, unsi
 		if ( !new_req->key_info->valid ) 
 			if ( (cur = GetLength(str, '$', len, cur, new_req, 3)) == -1 ) return -1;
 
-//printf("4 %d\n",req->key_info->len); 
+//printf("4 %d\n",new_req->key_info->len); 
 		if ( new_req->key_info->valid == 1 )
 			if ( (cur = GetKey(str, len, cur, new_req)) == -1 ) return -1;
 
 //printf("5\n"); 
 		new_req->key_info->key++;
-		#ifdef MEMIO
+		#ifdef ENABLE_LIBFTL
 		if ( new_req->type_info->type < 3 ) {
 			alloc_dma(new_req);
 		}	

@@ -47,7 +47,7 @@ CXXFLAGS += $(LIBFTL_INC)
 CXXFLAGS += -std=c++11 -D_DEFAULT_SOURCE -D NPRINTOPTION
 CXXFLAGS += -DNOHOST -DENABLE_LIBFTL -D NPRINTOPTION
 CFLAGS += -std=c++11 -D_DEFAULT_SOURCE
-CFLAGS += -DNOHOST -DENABLE_LIBFTL
+CFLAGS += -DNOHOST -DENABLE_LIBFTL -D DEBUG_MODE #-DLIBLSM
 #CFLAGS += -DNOHOST 
 LDFLAGS += -L./ -lmemio -lpthread
 #LDFLAGS += -lpthread 
@@ -56,6 +56,9 @@ LDFLAGS += -L./ -lmemio -lpthread
 OBJECTS = server.o command.o queue.o request.o priority_queue.o lsmtree.o bptree.o utils.o measure.o skiplist.o threading.o LR_inter.o
 
 #OBJECTS = server.c command.c queue.c request.c priority_queue.c lsmtree.c bptree.c utils.c measure.c skiplist.c threading.c LR_inter.c
+OBJECTS2 = queue.o lsmtree.o bptree.o utils.o measure.o skiplist.o threading.o LR_inter.o lsm_main.o
+LIBLSM: $(OBJECTS2) 
+	$(CXX) -o LIBLSM lsm_main.c $(OBJECTS2) $(LDFLAGS)
 
 test : $(OBJECTS)
 	$(CXX) -o test $(OBJECTS) $(LDFLAGS)
@@ -87,6 +90,8 @@ bptree.o : $*.* skiplist.c utils.c
 lsmtree.o : $*.* bptree.c skiplist.c measure.c
 
 LR_inter.o : $*.*
+
+lsm_main.o : $*.*
 
 clean :
 	rm -f *.o

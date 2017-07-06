@@ -75,7 +75,11 @@ int8_t lr_gc_make_req(int8_t t_num){
 int8_t lr_make_req(req_t *r){
 	uint8_t *type=(uint8_t*)malloc(sizeof(uint8_t));
 	int test_num;
+#ifdef LIBLSM
+	switch(r->type){
+#else
 	switch(r->type_info->type){
+#endif
 		case 3:
 		case 1://set
 			*type=LR_WRITE_T;
@@ -90,10 +94,18 @@ int8_t lr_make_req(req_t *r){
 	lsmtree_req_t *th_req=(lsmtree_req_t*)malloc(sizeof(lsmtree_req_t));
 	th_req->req=r;
 	th_req->end_req=lr_end_req;
+#ifdef LIBLSM
+	th_req->params[0]=(void*)type;
+	th_req->params[1]=(void*)&r->key;
+	th_req->params[2]=(void*)r->value;
+	th_req->params[3]=(void*)LSM;
+
+#else
 	th_req->params[0]=(void*)type;
 	th_req->params[1]=(void*)&r->key_info->key;
 	th_req->params[2]=(void*)r->value_info->value;
 	th_req->params[3]=(void*)LSM;
+#endif
 	threadset_assign(&processor,th_req);
 	return 0;
 }
@@ -101,9 +113,13 @@ int8_t lr_make_req(req_t *r){
 int8_t lr_end_req(void *ra){
 	lsmtree_req_t *r=(lsmtree_req_t *)ra;
 	lsmtree_req_t *parent;
+	lsmtree_gc_req_t *gc_p;
 	uint8_t *req_type=(uint8_t*)r->params[0];
 	switch(*req_type){
 		case LR_DR_T:
+#ifdef DEBUG_MODE
+printf("LR_DR_T start\n");
+#endif
 			parent=r->parent;
 			pthread_mutex_lock(&parent->meta_lock);
 			parent->now_number++;
@@ -117,21 +133,50 @@ int8_t lr_end_req(void *ra){
 #else
 			free(r->keys);
 #endif
+#ifdef DEBUG_MODE
+printf("LR_DR_T end\n");
+#endif
 			break;
 		case LR_DDR_T:
+#ifdef DEBUG_MODE
+printf("LR_DDR_T start\n");
+#endif
 			parent=r->parent;
 			pthread_mutex_lock(&parent->meta_lock);
 			parent->now_number++;
 			pthread_mutex_unlock(&parent->meta_lock);
+#ifdef DEBUG_MODE
+printf("LR_DDR_T end\n");
+#endif
 			break;
 		case LR_DDW_T:
-			parent=r->parent;
-			pthread_mutex_lock(&parent->meta_lock);
-			parent->now_number++;
-			pthread_mutex_unlock(&parent->meta_lock);
+#ifdef DEBUG_MODE
+printf("LR_DDW_T start\n");
+#endif
+			//parent=r->parent;
+			gc_p=r->gc_parent;
+			pthread_mutex_lock(&gc_p->meta_lock);
+			gc_p->now_number+=1;
+			pthread_mutex_unlock(&gc_p->meta_lock);
+#ifdef LIBLSM
+			memio_free_dma(1,r->req->dmaTag);
+#endif
+
+#ifdef DEBUG_MODE
+printf("LR_DDW_T end\n");
+#endif
 			break;
 		case LR_READ_T:
+#ifdef DEBUG_MODE
+printf("LR_READ_T start\n");
+#endif
 			pthread_mutex_destroy(&r->meta_lock);
+#ifdef LIBLSM
+			memio_free_dma(2,r->req->dmaTag);
+#endif
+#ifdef DEBUG_MODE
+printf("LR_READ_T end\n");
+#endif
 			break;
 		default:
 			break;
@@ -139,7 +184,11 @@ int8_t lr_end_req(void *ra){
 
 	free((uint8_t*)r->params[0]);
 	if(r->req!=NULL){
+#ifndef LIBLSM
 		r->req->end_req(r->req);
+#else
+		free(r);
+#endif
 	}
 	free(r);
 	return 0;
@@ -151,6 +200,9 @@ int8_t lr_gc_end_req(void *ra){
 	int setnumber,offset;
 	switch(*req_type){
 		case LR_DW_T:
+#ifdef DEBUG_MODE
+printf("gc_LR_DW_T start\n");
+#endif
 			parent=r->parent;
 			pthread_mutex_lock(&parent->meta_lock);
 			parent->now_number++;
@@ -160,8 +212,14 @@ int8_t lr_gc_end_req(void *ra){
 #else
 			free(r->keys);
 #endif
+#ifdef DEBUG_MODE
+printf("gc_LR_DW_T end\n");
+#endif
 			break;
 		case LR_DR_T:
+#ifdef DEBUG_MODE
+printf("gc_LR_DR_T start\n");
+#endif
 			parent=r->parent;
 			setnumber=(r->seq_number/2);
 			offset=r->seq_number%2;
@@ -174,17 +232,32 @@ int8_t lr_gc_end_req(void *ra){
 #else
 			free(r->keys);
 #endif
+#ifdef DEBUG_MODE
+printf("gc_LR_DR_T end\n");
+#endif
 			break;
 		case LR_FLUSH_T:			
+#ifdef DEBUG_MODE
+printf("gc_LR_FLUSH_T start\n");
+#endif
 			lr_req_wait((lsmtree_req_t*)r);
 			pthread_mutex_destroy(&r->meta_lock);
 			skiplist_free(r->skip_data);
+#ifdef DEBUG_MODE
+printf("gc_LR_FLUSH_T end\n");
+#endif
 			break;
 		case LR_COMP_T:
+#ifdef DEBUG_MODE
+printf("gc_LR_COMP_T start\n");
+#endif
 			lr_req_wait((lsmtree_req_t *)r);
 			pthread_mutex_destroy(&r->meta_lock);
 			if(r->compt_headers!=NULL)
 				free(r->compt_headers);
+#ifdef DEBUG_MODE
+printf("gc_LR_COMP_T end\n");
+#endif
 			break;
 	}
 	free((uint8_t*)r->params[0]);

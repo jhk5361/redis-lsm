@@ -200,8 +200,8 @@ int thread_get(lsmtree *LSM, KEYT key, threading *input, char *ret,lsmtree_req_t
 			req->now_number=0;
 			req->target_number=2;
 			req->res=(sktable*)malloc(sizeof(sktable));
-			skiplist_meta_read(temp->pbn,LSM->dfd,0,req);
-			skiplist_meta_read(temp->pbn+1,LSM->dfd,1,req);
+			skiplist_meta_read_n(temp->pbn,LSM->dfd,0,req);
+			skiplist_meta_read_n(temp->pbn+1,LSM->dfd,1,req);
 			lr_req_wait(req);
 
 			req->now_number=0;
@@ -309,17 +309,16 @@ bool compaction(lsmtree *LSM,level *src, level *des,Entry *ent,lsmtree_gc_req_t 
 		req->target_number=allnumber*2;
 		req->compt_headers=(sktable*)malloc(sizeof(sktable)*allnumber);
 		int seq_number=0;
-		lsmtree_gc_req_t *req_set=(lsmtree_gc_req_t*)malloc(sizeof(lsmtree_gc_req_t)*allnumber);
 		int counter=0;
 		for(int i=0; iter[i]!=NULL ;i++){
 			check_getdata=true;
 			Entry *temp_e=iter[i];
 			delete_set[deleteIdx++]=temp_e->key;
-			skiplist_meta_read(temp_e->pbn,LSM->dfd,counter++,(lsmtree_req_t*)req);
-			skiplist_meta_read(temp_e->pbn+1,LSM->dfd,counter++,(lsmtree_req_t*)req);
+			skiplist_meta_read_c(temp_e->pbn,LSM->dfd,counter++,req);
+			skiplist_meta_read_c(temp_e->pbn+1,LSM->dfd,counter++,req);
 		}
-		skiplist_meta_read(target->pbn,LSM->dfd,counter++,(lsmtree_req_t*)req);
-		skiplist_meta_read(target->pbn+1,LSM->dfd,counter++,(lsmtree_req_t*)req);
+		skiplist_meta_read_c(target->pbn,LSM->dfd,counter++,req);
+		skiplist_meta_read_c(target->pbn+1,LSM->dfd,counter++,req);
 		free(iter);
 	}
 

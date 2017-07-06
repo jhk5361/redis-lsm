@@ -46,7 +46,13 @@ req_t* DequeReq() {
 
 #ifdef ENABLE_LIBFTL
 void alloc_dma(req_t *req) {
-	req->dmaTag = memio_alloc_dma(req->type_info->type, (&req->value_info->value));
+#ifdef DEBUG_MODE
+printf("start\n");
+#endif
+	req->dmaTag = memio_alloc_dma(req->type_info->type, &(req->value_info->value));
+#ifdef DEBUG_MODE
+printf("end\n");
+#endif
 	return;
 }
 #endif
@@ -160,6 +166,9 @@ int make_req(req_t *req) {
 			gettimeofday(&ms,NULL);
 		}
 	}
+#ifdef DEBUG_MODE
+printf("make_req start\n");
+#endif
 	if ( lr_make_req(req) == -1 ) {
 		SendBulkValue(req->fd, NULL, -1);
 		printf("make req failed!\n");
@@ -169,12 +178,18 @@ int make_req(req_t *req) {
 		SendOkCommand(req->fd);
 		return 0;
 	}
+#ifdef DEBUG_MODE
+printf("make_req end\n");
+#endif
 }
 //#endif
 
 //#ifdef ENABLE_LIBFTL
 int end_req(req_t *req) {
-	printf("end_req\n");
+//	printf("end_req\n");
+#ifdef DEBUG_MODE
+printf("end_req start\n");
+#endif
 	if ( req->type_info->type == 2 ) {
 		/*
 		unsigned int *_cur = req->cur;
@@ -205,8 +220,12 @@ int end_req(req_t *req) {
 		SendBulkValue(req->fd, req->value_info->value, req->value_info->len);
 			
 	//		SendBulkValue(req->fd, NULL, -1);
-		free_req(req);
 	}
+	free_req(req);
+
+#ifdef DEBUG_MODE
+printf("end_req end\n");
+#endif
 	return 0;
 }
 //#endif

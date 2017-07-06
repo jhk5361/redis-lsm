@@ -86,7 +86,7 @@ void* thread_gc_main(void *input){
 		pthread_mutex_lock(&myth->activated_check);
 		myth->isactivated=true;
 		pthread_mutex_unlock(&myth->activated_check);
-		//printf("activated : %d\n",number);
+		printf("activated : %d\n",number);
 		pthread_mutex_unlock(&master->gc_lock);
 	
 		pthread_mutex_lock(&myth->terminate);
@@ -119,7 +119,6 @@ void* thread_gc_main(void *input){
 					lsm_req->skip_data=data;
 					pthread_mutex_init(&lsm_req->meta_lock,NULL);
 					result_entry=make_entry(data->start,data->end,write_data(LSM,data,lsm_req));
-					
 					compaction(LSM,NULL,LSM->buf.disk[0],result_entry,lsm_req);
 					LSM->sstable=NULL;
 					break;
@@ -128,7 +127,7 @@ void* thread_gc_main(void *input){
 			}
 			lsm_req->end_req(lsm_req);
 
-			//printf("deactivated : %d\n",number++);
+			printf("deactivated : %d\n",number++);
 			pthread_mutex_lock(&myth->activated_check);
 			myth->isactivated=false;
 			pthread_mutex_unlock(&myth->activated_check);

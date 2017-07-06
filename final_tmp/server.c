@@ -100,6 +100,7 @@ void* work_on_accept(void *arg) {
 			printf("parse failed %d\n", exit_val);
 		}
 		*/
+//printf("MSG\n%s\n",msg);
 		if ( GetRequest(clnt_sock, msg, str_len, req, &start, &end, read_async_PQ, &read_async_mutx) == -1 ) {
 			memset(msg, 0, str_len);
 			continue;

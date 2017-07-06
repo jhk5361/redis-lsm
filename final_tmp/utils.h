@@ -48,7 +48,7 @@
 #ifndef BOOL
 #define BOOL
 #ifndef NOHOST
-typedef enum{false,true} bool;
+//typedef enum{false,true} bool;
 #endif
 #endif
 #endif

@@ -43,7 +43,8 @@ snode *skiplist_find(skiplist*,KEYT);
 snode *skiplist_insert(skiplist*,KEYT,char *,struct lsmtree_req_t *,bool);
 
 sktable *skiplist_read(KEYT, int hfd, int dfd);
-sktable *skiplist_meta_read(KEYT, int fd,int ,struct lsmtree_req_t *);
+sktable *skiplist_meta_read_n(KEYT, int fd,int ,struct lsmtree_req_t *);
+sktable *skiplist_meta_read_c(KEYT, int fd,int ,struct lsmtree_gc_req_t *);
 sktable *skiplist_data_read(sktable*,KEYT pbn, int fd);
 keyset* skiplist_keyset_find(sktable *,KEYT key);
 bool skiplist_keyset_read(keyset* ,char *,int fd,lsmtree_req_t *);

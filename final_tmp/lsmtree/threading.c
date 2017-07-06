@@ -167,10 +167,12 @@ void* thread_main(void *input){
 		
 		pthread_mutex_lock(&myth->terminate);
 		if(myth->terminateflag){
+printf("1\n");
 			pthread_mutex_unlock(&myth->terminate);
 			break;
 		}
 		else{
+printf("2\n");
 			pthread_mutex_unlock(&myth->terminate);
 			uint8_t *type=(uint8_t*)lsm_req->params[0];
 			KEYT *key=(KEYT*)lsm_req->params[1];
@@ -195,6 +197,7 @@ void* thread_main(void *input){
 				default:
 					break;
 			}
+printf("3\n");
 			pthread_mutex_lock(&myth->activated_check);
 			myth->isactivated=false;
 			pthread_mutex_unlock(&myth->activated_check);
